@@ -1,0 +1,14 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dependencies and local tooling
+node_modules/
+.firebase/
+*.log
+
+# InDesign lock and backup files
+~*.idlk
+*.indb~

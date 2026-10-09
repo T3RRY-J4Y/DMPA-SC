@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FAQs · DMPA self-inject</title>
+<meta name="description" content="Resource hub for DMPA-SC self-injectable contraception: how to self-inject, next-date calculator, side effects, method comparison and FAQs.">
+<link rel="icon" type="image/png" href="assets/logo-purple.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Satisfy&display=swap" rel="stylesheet">
+<script src="faq-data.js"></script>
+<style>
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{margin:0;background:#FBF9F6;color:#1A1238;font-family:Rubik,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#9300FF;text-decoration:none}
+a:hover{color:#3626A7}
+*{box-sizing:border-box}
+</style>
+</helmet>
+
+<header style="position:sticky;top:0;z-index:20;padding:12px clamp(10px,2vw,24px);margin-bottom:-96px;pointer-events:none">
+  <div style="max-width:1240px;margin:0 auto;padding:8px 8px 8px clamp(14px,2vw,24px);display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-radius:999px;box-shadow:0 10px 30px rgba(26,18,56,.14);border:1px solid rgba(26,18,56,.06);pointer-events:auto">
+    <a href="DMPA Resource Hub.dc.html" aria-label="DMPA self-inject home" style="display:flex;flex-shrink:0"><img src="assets/logo-purple.png" alt="DMPA self-inject" style="height:54px;width:auto;display:block"></a>
+    <sc-if value="{{ navWide }}" hint-placeholder-val="{{ true }}">
+    <nav style="display:flex;gap:4px;flex:1 1 0;overflow-x:auto;justify-content:safe center;min-width:0;scrollbar-width:none">
+      <a href="DMPA Resource Hub.dc.html#about" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:#1A1238;font-weight:600;font-size:15px;white-space:nowrap;transition:background .2s" style-hover="background:#E7DBFF;color:#1A1238"><span style="width:8px;height:8px;border-radius:50%;background:#9300FF;flex-shrink:0"></span>About</a>
+      <a href="DMPA Resource Hub.dc.html#maps" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:#1A1238;font-weight:600;font-size:15px;white-space:nowrap;transition:background .2s" style-hover="background:#FFD3E9;color:#1A1238"><span style="width:8px;height:8px;border-radius:50%;background:#FF017E;flex-shrink:0"></span>How to inject</a>
+      <a href="DMPA Resource Hub.dc.html#expect" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:#1A1238;font-weight:600;font-size:15px;white-space:nowrap;transition:background .2s" style-hover="background:#FFE1C2;color:#1A1238"><span style="width:8px;height:8px;border-radius:50%;background:#FF8500;flex-shrink:0"></span>What to expect</a>
+      <a href="DMPA Resource Hub.dc.html#reminders" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:#1A1238;font-weight:600;font-size:15px;white-space:nowrap;transition:background .2s" style-hover="background:#FFF0B3;color:#1A1238"><span style="width:8px;height:8px;border-radius:50%;background:#F9C70E;flex-shrink:0"></span>Reminders</a>
+      <a href="DMPA Resource Hub.dc.html#compare" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:#1A1238;font-weight:600;font-size:15px;white-space:nowrap;transition:background .2s" style-hover="background:#C9F9DD;color:#1A1238"><span style="width:8px;height:8px;border-radius:50%;background:#05BF98;flex-shrink:0"></span>Compare methods</a>
+      <a href="DMPA FAQs.dc.html" aria-current="page" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:#E7DFFF;color:#1A1238;font-weight:700;font-size:15px;white-space:nowrap"><span style="width:10px;height:10px;border-radius:50%;background:#AA90FD;flex-shrink:0"></span>FAQs</a>
+    </nav>
+    <a href="DMPA Resources.dc.html" style="flex-shrink:0;white-space:nowrap;display:flex;align-items:center;border:2px solid #9300FF;color:#9300FF;font-weight:700;font-size:15px;padding:10px 18px;border-radius:999px" style-hover="background:#9300FF;color:#fff">Resources</a>
+    </sc-if>
+    <sc-if value="{{ navNarrow }}"><span style="flex:1"></span></sc-if>
+    <a href="https://wa.me/27781680192" style="flex-shrink:0;white-space:nowrap;display:flex;align-items:center;gap:8px;background:#FF017E;color:#fff;font-weight:700;font-size:15px;padding:12px 20px;border-radius:999px" style-hover="background:#E0006E;color:#fff">WhatsApp us</a>
+    <sc-if value="{{ navNarrow }}">
+      <button onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-label="Menu" style="all:unset;cursor:pointer;flex-shrink:0;width:48px;height:48px;border-radius:50%;border:2px solid #1A1238;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px" style-hover="background:#EFE6FF">
+        <span style="width:18px;height:2.5px;border-radius:2px;background:#1A1238"></span>
+        <span style="width:18px;height:2.5px;border-radius:2px;background:#1A1238"></span>
+        <span style="width:18px;height:2.5px;border-radius:2px;background:#1A1238"></span>
+      </button>
+    </sc-if>
+  </div>
+  <sc-if value="{{ menuOpen }}">
+    <nav aria-label="Mobile" style="pointer-events:auto;max-width:1240px;margin:8px auto 0;background:#fff;border-radius:28px;box-shadow:0 18px 40px rgba(26,18,56,.18);padding:12px 12px 16px;display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 120px);overflow-y:auto">
+        <a href="DMPA Resource Hub.dc.html#about" onClick="{{ closeMenu }}" style="padding:14px 16px;border-radius:16px;color:#1A1238;font-weight:600;font-size:18px;min-height:48px;display:flex;align-items:center;gap:14px" style-hover="background:#E7DBFF;color:#1A1238"><span style="width:12px;height:12px;border-radius:50%;background:#9300FF;flex-shrink:0"></span>About</a>
+        <a href="DMPA Resource Hub.dc.html#maps" onClick="{{ closeMenu }}" style="padding:14px 16px;border-radius:16px;color:#1A1238;font-weight:600;font-size:18px;min-height:48px;display:flex;align-items:center;gap:14px" style-hover="background:#FFD3E9;color:#1A1238"><span style="width:12px;height:12px;border-radius:50%;background:#FF017E;flex-shrink:0"></span>How to inject</a>
+        <a href="DMPA Resource Hub.dc.html#expect" onClick="{{ closeMenu }}" style="padding:14px 16px;border-radius:16px;color:#1A1238;font-weight:600;font-size:18px;min-height:48px;display:flex;align-items:center;gap:14px" style-hover="background:#FFE1C2;color:#1A1238"><span style="width:12px;height:12px;border-radius:50%;background:#FF8500;flex-shrink:0"></span>What to expect</a>
+        <a href="DMPA Resource Hub.dc.html#reminders" onClick="{{ closeMenu }}" style="padding:14px 16px;border-radius:16px;color:#1A1238;font-weight:600;font-size:18px;min-height:48px;display:flex;align-items:center;gap:14px" style-hover="background:#FFF0B3;color:#1A1238"><span style="width:12px;height:12px;border-radius:50%;background:#F9C70E;flex-shrink:0"></span>Reminders</a>
+        <a href="DMPA Resource Hub.dc.html#compare" onClick="{{ closeMenu }}" style="padding:14px 16px;border-radius:16px;color:#1A1238;font-weight:600;font-size:18px;min-height:48px;display:flex;align-items:center;gap:14px" style-hover="background:#C9F9DD;color:#1A1238"><span style="width:12px;height:12px;border-radius:50%;background:#05BF98;flex-shrink:0"></span>Compare methods</a>
+        <a href="DMPA FAQs.dc.html" onClick="{{ closeMenu }}" style="padding:14px 16px;border-radius:16px;color:#1A1238;font-weight:600;font-size:18px;min-height:48px;display:flex;align-items:center;gap:14px" style-hover="background:#E7DFFF;color:#1A1238"><span style="width:12px;height:12px;border-radius:50%;background:#AA90FD;flex-shrink:0"></span>FAQs</a>
+        <a href="DMPA Resources.dc.html" onClick="{{ closeMenu }}" style="margin-top:8px;padding:14px 16px;border-radius:999px;border:2px solid #9300FF;color:#9300FF;font-weight:700;font-size:17px;text-align:center" style-hover="background:#9300FF;color:#fff">Resources</a>
+    </nav>
+  </sc-if>
+</header>
+
+<section id="top" data-screen-label="FAQ hero" style="background:#FFA6D4;position:relative;overflow:hidden">
+  <div style="position:absolute;width:320px;height:320px;border-radius:50%;background:#FF017E;right:-100px;top:-140px"></div>
+  <div style="position:absolute;width:120px;height:120px;border-radius:50%;background:#9300FF;right:22%;bottom:-60px"></div>
+  <div style="position:relative;max-width:1240px;margin:0 auto;padding:calc(96px + clamp(48px,7vw,88px)) clamp(16px,4vw,40px);display:flex;flex-direction:column;gap:20px">
+    <a href="DMPA Resource Hub.dc.html" style="align-self:flex-start;color:#5A0030;font-weight:600;font-size:15px" style-hover="color:#1A1238">← Back to home</a>
+    <span style="font-family:Satisfy,cursive;font-size:34px;color:#9300FF;line-height:1">ask us anything</span>
+    <h1 style="margin:0;font-weight:900;font-size:clamp(38px,9vw,80px);line-height:.98;letter-spacing:-.02em;max-width:12em;text-wrap:balance">Frequently asked questions</h1>
+    <p style="margin:0;font-size:clamp(18px,2vw,20px);line-height:1.5;max-width:36em;text-wrap:pretty">Honest, simple answers about DMPA-SC self-injection, from getting started to side effects, fertility and your rights.</p>
+    <label style="display:flex;max-width:620px;margin-top:8px">
+      <input type="search" placeholder="Search questions, e.g. “late”, “bleeding”, “breastfeeding”" aria-label="Search FAQs" value="{{ query }}" onChange="{{ setQuery }}" style="width:100%;font-family:Rubik,sans-serif;font-size:18px;padding:18px 24px;border:2px solid #1A1238;border-radius:999px;background:#fff;color:#1A1238;min-height:60px;box-shadow:0 10px 28px rgba(90,0,48,.15)">
+    </label>
+  </div>
+</section>
+
+<sc-if value="{{ notSearching }}" hint-placeholder-val="{{ true }}">
+<section data-screen-label="Quick facts" style="max-width:1240px;margin:0 auto;padding:clamp(48px,6vw,72px) clamp(16px,4vw,40px) 0;display:flex;flex-direction:column;gap:22px">
+  <h2 style="margin:0;font-weight:900;font-size:clamp(28px,3.6vw,40px)">Quick facts at a glance</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:12px">
+    <sc-for list="{{ quickFacts }}" as="f" hint-placeholder-count="12">
+      <div style="background:{{ f.bg }};border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:8px">
+        <span style="font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#3D3360">{{ f.topic }}</span>
+        <span style="font-weight:700;font-size:17px;line-height:1.35">{{ f.answer }}</span>
+      </div>
+    </sc-for>
+  </div>
+</section>
+</sc-if>
+
+<section data-screen-label="FAQ list" style="max-width:1240px;margin:0 auto;padding:clamp(40px,6vw,72px) clamp(16px,4vw,40px) clamp(64px,8vw,104px);display:flex;flex-wrap:wrap;gap:clamp(24px,4vw,56px);align-items:flex-start">
+  <aside style="flex:1 1 240px;max-width:100%;position:{{ asidePos }};top:110px;display:flex;flex-direction:column;gap:6px">
+    <span style="font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6B6188;padding:0 12px 8px">Topics</span>
+    <sc-for list="{{ sections }}" as="s" hint-placeholder-count="7">
+      <a href="#{{ s.anchor }}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;color:#1A1238;font-weight:600;font-size:15px;line-height:1.3" style-hover="background:#F1ECFA;color:#1A1238">
+        <span style="flex-shrink:0;width:32px;height:32px;border-radius:10px;background:{{ s.color }};color:{{ s.numFg }};display:flex;align-items:center;justify-content:center;font-weight:900;font-size:15px">{{ s.n }}</span>
+        <span style="flex:1">{{ s.title }}</span>
+        <span style="font-size:13px;color:#6B6188;font-weight:500">{{ s.count }}</span>
+      </a>
+    </sc-for>
+    <div style="margin-top:16px;background:#1A1238;color:#fff;border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:10px">
+      <strong style="font-size:16px;color:#FFE06B">Still have a question?</strong>
+      <span style="font-size:15px;line-height:1.45">Chat to us on WhatsApp, or speak to your clinic nurse.</span>
+      <a href="https://wa.me/27781680192" style="align-self:flex-start;background:#FF017E;color:#fff;font-weight:700;font-size:15px;padding:10px 16px;border-radius:999px" style-hover="background:#E0006E;color:#fff">078 168 0192</a>
+    </div>
+  </aside>
+
+  <div style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:clamp(40px,5vw,64px)">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:-24px">
+      <span style="font-size:16px;color:#4A3F70;font-weight:500">{{ countLabel }}</span>
+      <button onClick="{{ toggleAll }}" style="all:unset;cursor:pointer;border:2px solid #1A1238;font-weight:700;font-size:15px;padding:10px 18px;border-radius:999px" style-hover="background:#1A1238;color:#fff">{{ toggleAllLabel }}</button>
+    </div>
+
+    <sc-for list="{{ sections }}" as="s" hint-placeholder-count="2">
+      <sc-if value="{{ s.visible }}" hint-placeholder-val="{{ true }}">
+        <div id="{{ s.anchor }}" style="display:flex;flex-direction:column;gap:22px">
+          <div style="display:flex;align-items:center;gap:18px">
+            <span style="flex-shrink:0;width:64px;height:64px;border-radius:20px;background:{{ s.color }};color:{{ s.numFg }};display:flex;align-items:center;justify-content:center;font-weight:900;font-size:32px">{{ s.n }}</span>
+            <h2 style="margin:0;font-weight:900;font-size:clamp(26px,3.2vw,38px);line-height:1.05;letter-spacing:-.01em;text-wrap:balance">{{ s.title }}</h2>
+          </div>
+          <sc-for list="{{ s.groups }}" as="g">
+            <sc-if value="{{ g.visible }}">
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <h3 style="margin:8px 0 4px;font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:{{ s.ink }}">{{ g.title }}</h3>
+                <sc-for list="{{ g.items }}" as="q">
+                  <div style="background:#fff;border:1px solid {{ q.border }};border-radius:20px;overflow:hidden">
+                    <button onClick="{{ q.toggle }}" aria-expanded="{{ q.open }}" style="all:unset;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;width:100%;box-sizing:border-box;padding:18px 22px;font-weight:700;font-size:18px;line-height:1.3;min-height:44px" style-focus="outline:3px solid #9300FF;outline-offset:-3px">
+                      <span>{{ q.q }}</span>
+                      <span style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:{{ q.iconBg }};color:{{ q.iconFg }};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px">{{ q.icon }}</span>
+                    </button>
+                    <sc-if value="{{ q.open }}">
+                      <div style="padding:0 22px 22px;display:flex;flex-direction:column;gap:12px;font-size:16px;line-height:1.6;color:#3D3360;max-width:46em">
+                        <sc-for list="{{ q.blocks }}" as="b">
+                          <sc-if value="{{ b.isP }}"><p style="margin:0;text-wrap:pretty">{{ b.text }}</p></sc-if>
+                          <sc-if value="{{ b.isUl }}">
+                            <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px">
+                              <sc-for list="{{ b.items }}" as="li">
+                                <li style="display:flex;gap:12px"><span style="flex-shrink:0;width:8px;height:8px;border-radius:50%;background:{{ s.color }};margin-top:9px"></span><span><strong style="color:#1A1238">{{ li.lead }}</strong> {{ li.text }}</span></li>
+                              </sc-for>
+                            </ul>
+                          </sc-if>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-for>
+        </div>
+      </sc-if>
+    </sc-for>
+
+    <sc-if value="{{ empty }}">
+      <div style="background:#fff;border:2px dashed #D9D2EA;border-radius:28px;padding:48px;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center">
+        <strong style="font-size:20px">No answers match “{{ query }}”.</strong>
+        <span style="font-size:16px;color:#4A3F70">Try a different word, or ask us directly on WhatsApp 078 168 0192.</span>
+        <button onClick="{{ clear }}" style="all:unset;cursor:pointer;color:#9300FF;font-weight:700;font-size:16px;padding:8px">Clear search</button>
+      </div>
+    </sc-if>
+  </div>
+</section>
+
+<footer style="background:#9300FF;color:#fff">
+  <div style="max-width:1240px;margin:0 auto;padding:40px clamp(16px,4vw,40px);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap">
+    <img src="assets/logo-full-white.png" alt="DMPA self-inject: Contraception Made Simple" style="height:64px;width:auto;display:block">
+    <p style="margin:0;font-size:14px;line-height:1.5;max-width:36em;color:#F1E6FF">{{ disclaimer }}</p>
+  </div>
+</footer>
+
+<sc-if value="{{ showTop }}">
+  <a href="#top" aria-label="Back to top" style="position:fixed;right:clamp(16px,3vw,32px);bottom:clamp(16px,3vw,32px);z-index:30;width:56px;height:56px;border-radius:50%;background:#1A1238;color:#FFE06B;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px rgba(26,18,56,.3);transition:transform .2s" style-hover="transform:translateY(-3px);background:#9300FF;color:#fff"><span style="width:14px;height:14px;border-top:3.5px solid currentColor;border-left:3.5px solid currentColor;border-radius:2px;transform:translateY(3px) rotate(45deg)"></span></a>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const PAL = [
+  { color: '#9300FF', numFg: '#fff', ink: '#7A00D6', light: '#EFE6FF' },
+  { color: '#05BF98', numFg: '#1A1238', ink: '#00785F', light: '#E3FBEF' },
+  { color: '#FF017E', numFg: '#fff', ink: '#C10060', light: '#FFEFF7' },
+  { color: '#F9C70E', numFg: '#1A1238', ink: '#7A5C00', light: '#FFF7D6' },
+  { color: '#FF8500', numFg: '#1A1238', ink: '#A85400', light: '#FFF1E2' },
+  { color: '#3626A7', numFg: '#fff', ink: '#3626A7', light: '#EEF2FF' },
+  { color: '#AA90FD', numFg: '#1A1238', ink: '#5B3FD0', light: '#F2EEFF' },
+];
+const QF_BG = ['#B7C8FC', '#FFE06B', '#FFA6D4', '#80F2A6', '#FFB564', '#AA90FD'];
+const textOf = it => (it.q + ' ' + it.blocks.map(b => b.type === 'p' ? b.text : b.items.map(i => i.lead + ' ' + i.text).join(' ')).join(' ')).toLowerCase();
+
+class Component extends DCLogic {
+  state = { navNarrow: false, menuOpen: false, open: { '0-0-0': true }, query: '', showTop: false, wide: true, ready: !!window.DMPA_FAQ };
+  componentDidMount() {
+    this.onNav = () => { const n = window.innerWidth < 1200; if (n !== this.state.navNarrow) this.setState({ navNarrow: n, menuOpen: false }); };
+    window.addEventListener('resize', this.onNav); this.onNav();
+    this.onScroll = () => { const v = window.scrollY > 600; if (v !== this.state.showTop) this.setState({ showTop: v }); };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    this.onResize = () => { const w = window.innerWidth >= 960; if (w !== this.state.wide) this.setState({ wide: w }); };
+    window.addEventListener('resize', this.onResize); this.onResize();
+    if (!window.DMPA_FAQ) this.poll = setInterval(() => { if (window.DMPA_FAQ) { clearInterval(this.poll); this.setState({ ready: true }); } }, 50);
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); window.removeEventListener('resize', this.onResize); window.removeEventListener('resize', this.onNav); clearInterval(this.poll); }
+  allIds() { const ids = []; (window.DMPA_FAQ?.sections || []).forEach((s, si) => s.groups.forEach((g, gi) => g.items.forEach((_, ii) => ids.push(`${si}-${gi}-${ii}`)))); return ids; }
+  renderVals() {
+    const data = window.DMPA_FAQ || { sections: [], quickFacts: [], disclaimer: '' };
+    const q = this.state.query.trim().toLowerCase();
+    const searching = q.length > 1;
+    const open = this.state.open;
+    let shown = 0;
+    const sections = data.sections.map((s, si) => {
+      const pal = PAL[si % PAL.length];
+      let count = 0;
+      const groups = s.groups.map((g, gi) => {
+        const items = g.items.map((it, ii) => ({ it, id: `${si}-${gi}-${ii}` })).filter(x => !searching || textOf(x.it).includes(q)).map(({ it, id }) => {
+          const isOpen = searching || !!open[id];
+          return {
+            q: it.q, open: isOpen, icon: isOpen ? '–' : '+',
+            iconBg: isOpen ? pal.color : pal.light, iconFg: isOpen ? pal.numFg : pal.ink,
+            border: isOpen ? pal.color : '#ECE6F7',
+            toggle: () => this.setState(st => ({ open: { ...st.open, [id]: !st.open[id] } })),
+            blocks: it.blocks.map(b => ({ isP: b.type === 'p', isUl: b.type === 'ul', text: b.text, items: b.items })),
+          };
+        });
+        count += items.length;
+        return { title: g.title, items, visible: items.length > 0 };
+      });
+      shown += count;
+      return { ...pal, n: s.n, title: s.title, anchor: 'topic-' + s.n, groups, count, visible: count > 0 };
+    });
+    const ids = this.allIds();
+    const allOpen = ids.length > 0 && ids.every(id => open[id]);
+    return {
+      navWide: !this.state.navNarrow, navNarrow: this.state.navNarrow, menuOpen: this.state.navNarrow && this.state.menuOpen,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })), closeMenu: () => this.setState({ menuOpen: false }),
+      query: this.state.query,
+      setQuery: e => this.setState({ query: e.target.value }),
+      clear: () => this.setState({ query: '' }),
+      notSearching: !searching,
+      quickFacts: data.quickFacts.map((f, i) => ({ ...f, bg: QF_BG[i % QF_BG.length] })),
+      sections,
+      empty: searching && shown === 0,
+      countLabel: searching ? `${shown} ${shown === 1 ? 'answer' : 'answers'} for “${this.state.query.trim()}”` : `${shown} questions in ${sections.length} topics`,
+      toggleAllLabel: allOpen ? 'Collapse all' : 'Expand all',
+      toggleAll: () => this.setState({ open: allOpen ? {} : Object.fromEntries(ids.map(id => [id, true])) }),
+      disclaimer: data.disclaimer,
+      showTop: this.state.showTop,
+      asidePos: this.state.wide ? 'sticky' : 'static',
+    };
+  }
+}
+</script>
+</body>
+</html>

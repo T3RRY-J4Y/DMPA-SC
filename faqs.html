@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-ZA" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQs · DMPA self-inject</title>
+  <meta name="description" content="Honest, simple answers about DMPA-SC self-injection, from getting started to side effects, fertility and your rights.">
+  <meta name="theme-color" content="#9300FF">
+  <meta property="og:title" content="DMPA-SC frequently asked questions">
+  <meta property="og:description" content="Honest, simple answers about DMPA-SC self-injection.">
+  <meta property="og:image" content="assets/images/logo-full-purple.png">
+  <link rel="icon" type="image/png" href="assets/images/logo-purple.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Satisfy&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/config.js" defer></script>
+  <script src="js/data/faq-data.js" defer></script>
+  <script src="js/site.js" defer></script>
+  <script src="js/faqs.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="site-header__bar">
+    <a class="site-header__logo" href="index.html" aria-label="DMPA self-inject home"><img src="assets/images/logo-purple.png" alt="DMPA self-inject" width="136" height="54"></a>
+    <nav class="site-nav" aria-label="Main">
+      <a class="nav-link tone-purple" href="index.html#about">About</a>
+      <a class="nav-link tone-pink" href="index.html#maps">How to inject</a>
+      <a class="nav-link tone-orange" href="index.html#expect">What to expect</a>
+      <a class="nav-link tone-yellow" href="index.html#reminders">Reminders</a>
+      <a class="nav-link tone-green" href="index.html#compare">Compare methods</a>
+      <a class="nav-link tone-lilac" href="faqs.html" aria-current="page">FAQs</a>
+    </nav>
+    <a class="btn btn--sm btn--outline-purple site-header__resources" href="resources.html">Resources</a>
+    <span class="site-header__spacer"></span>
+    <a class="btn btn--sm btn--whatsapp site-header__whatsapp" href="https://wa.me/27781680192" data-whatsapp-link>WhatsApp us</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+    <a class="nav-link tone-purple" href="index.html#about">About</a>
+    <a class="nav-link tone-pink" href="index.html#maps">How to inject</a>
+    <a class="nav-link tone-orange" href="index.html#expect">What to expect</a>
+    <a class="nav-link tone-yellow" href="index.html#reminders">Reminders</a>
+    <a class="nav-link tone-green" href="index.html#compare">Compare methods</a>
+    <a class="nav-link tone-indigo" href="index.html#downloads">Downloads</a>
+    <a class="nav-link tone-lilac" href="faqs.html" aria-current="page">FAQs</a>
+    <a class="btn btn--outline-purple" href="resources.html">Resources</a>
+  </nav>
+</header>
+
+<main id="main">
+
+<section id="top" class="bg-pink has-blobs">
+  <span class="blob" style="width:320px;height:320px;background:var(--pink);right:-100px;top:-140px"></span>
+  <span class="blob" style="width:120px;height:120px;background:var(--purple);right:22%;bottom:-60px"></span>
+  <div class="container hero hero--compact stack" style="--stack-gap:20px">
+    <a class="back-link" href="index.html" style="color:#5A0030">← Back to home</a>
+    <span class="script script--tag" style="color:var(--purple)">ask us anything</span>
+    <h1 class="display" style="font-size:clamp(38px,9vw,80px);max-width:12em">Frequently asked questions</h1>
+    <p class="lead">Honest, simple answers about DMPA-SC self-injection, from getting started to side effects, fertility and your rights.</p>
+    <form role="search" onsubmit="return false" style="max-width:620px;margin-top:8px">
+      <label class="visually-hidden" for="faq-search">Search FAQs</label>
+      <input class="input input--pill input--search input--lg" type="search" id="faq-search" placeholder="Search, e.g. “late”, “bleeding”, “breastfeeding”" autocomplete="off">
+    </form>
+  </div>
+</section>
+
+<section class="container section--tight-top stack" id="quick-facts" aria-labelledby="qf-title" style="--stack-gap:22px">
+  <h2 class="h2 h2--sm" id="qf-title">Quick facts at a glance</h2>
+  <div class="grid grid--fill" style="--grid-min:230px;--grid-gap:12px" id="quick-facts-list"></div>
+</section>
+
+<section class="container section faq-layout" aria-label="All questions">
+  <aside class="faq-aside">
+    <span class="faq-aside__label">Topics</span>
+    <nav aria-label="FAQ topics" id="topic-nav" class="stack" style="--stack-gap:2px"></nav>
+    <div class="help-card">
+      <strong>Still have a question?</strong>
+      <span style="font-size:15px;line-height:1.45">Chat to us on WhatsApp, or speak to your clinic nurse.</span>
+      <a class="btn btn--sm btn--whatsapp" href="https://wa.me/27781680192" data-whatsapp-link data-whatsapp-number>078 168 0192</a>
+    </div>
+  </aside>
+
+  <div class="faq-main">
+    <div class="faq-toolbar">
+      <span id="faq-count" aria-live="polite">Loading questions…</span>
+      <button class="btn btn--sm btn--outline" type="button" id="toggle-all">Expand all</button>
+    </div>
+    <div id="faq-list" class="stack" style="--stack-gap:clamp(40px,5vw,64px)"></div>
+    <div class="empty-state" id="faq-empty" hidden>
+      <strong>No answers match “<span data-query></span>”.</strong>
+      <span class="text-muted">Try a different word, or ask us directly on WhatsApp <span data-whatsapp-number>078 168 0192</span>.</span>
+      <button class="btn btn--sm" type="button" id="faq-clear" style="color:var(--purple)">Clear search</button>
+    </div>
+    <noscript><p class="empty-state">Please turn on JavaScript to browse the FAQs, or WhatsApp us on 078 168 0192.</p></noscript>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container site-footer__inner site-footer__inner--slim">
+    <div class="site-footer__bottom">
+      <img class="site-footer__logo" src="assets/images/logo-full-white.png" alt="DMPA self-inject: Contraception Made Simple" width="130" height="64" style="height:64px">
+      <div class="stack stack--sm">
+        <nav class="site-footer__links" aria-label="Footer"><a href="index.html">Home</a><a href="faqs.html">FAQs</a><a href="resources.html">Resources</a></nav>
+        <p class="site-footer__legal" id="faq-disclaimer">This hub supports, but does not replace, advice from your nurse or health worker. DMPA-SC does not protect against HIV or STIs.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a class="back-to-top" href="#top" aria-label="Back to top"></a>
+</body>
+</html>

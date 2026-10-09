@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DMPA self-inject · Contraception Made Simple</title>
+<meta name="description" content="Resource hub for DMPA-SC self-injectable contraception: how to self-inject, next-date calculator, side effects, method comparison and FAQs.">
+<link rel="icon" type="image/png" href="assets/logo-purple.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Satisfy&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{margin:0;background:#FBF9F6;color:#1A1238;font-family:Rubik,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#9300FF;text-decoration:none}
+a:hover{color:#3626A7}
+*{box-sizing:border-box}
+input[type=date]{font-family:Rubik,sans-serif}
+</style>
+</helmet>
+
+<header style="position:sticky;top:0;z-index:20;padding:12px clamp(10px,2vw,24px);margin-bottom:-96px;pointer-events:none">
+  <div style="max-width:1240px;margin:0 auto;padding:8px 8px 8px clamp(14px,2vw,24px);display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-radius:999px;box-shadow:0 10px 30px rgba(26,18,56,.14);border:1px solid rgba(26,18,56,.06);pointer-events:auto">
+    <a href="#top" aria-label="DMPA self-inject home" style="display:flex;flex-shrink:0"><img src="assets/logo-purple.png" alt="DMPA self-inject" style="height:54px;width:auto;display:block"></a>
+    <sc-if value="{{ navWide }}" hint-placeholder-val="{{ true }}">
+    <nav style="display:flex;gap:4px;flex:1 1 0;overflow-x:auto;justify-content:safe center;min-width:0;scrollbar-width:none">
+      <a href="#about" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:#1A1238;font-weight:600;font-size:15px;white-space:nowrap;transition:background .2s" style-hover="background:#E7DBFF;color:#1A1238"><span style="width:8px;height:8px;border-radius:50%;background:#9300FF;flex-shrink:0"></span>About</a>
+      <a href="#maps" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:#1A1238;font-weight:600;font-size:15px;white-space:nowrap;transition:background .2s" style-hover="background:#FFD3E9;color:#1A1238"><span style="width:8px;height:8px;border-radius:50%;background:#FF017E;flex-shrink:0"></span>How to inject</a>
+      <a href="#expect" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:#1A1238;font-weight:600;font-size:15px;white-space:nowrap;transition:background .2s" style-hover="background:#FFE1C2;color:#1A1238"><span style="width:8px;height:8px;border-radius:50%;background:#FF8500;flex-shrink:0"></span>What to expect</a>
+      <a href="#reminders" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:#1A1238;font-weight:600;font-size:15px;white-space:nowrap;transition:background .2s" style-hover="background:#FFF0B3;color:#1A1238"><span style="width:8px;height:8px;border-radius:50%;background:#F9C70E;flex-shrink:0"></span>Reminders</a>
+      <a href="#compare" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:#1A1238;font-weight:600;font-size:15px;white-space:nowrap;transition:background .2s" style-hover="background:#C9F9DD;color:#1A1238"><span style="width:8px;height:8px;border-radius:50%;background:#05BF98;flex-shrink:0"></span>Compare methods</a>
+      <a href="#downloads" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:#1A1238;font-weight:600;font-size:15px;white-space:nowrap;transition:background .2s" style-hover="background:#DCE4FE;color:#1A1238"><span style="width:8px;height:8px;border-radius:50%;background:#3626A7;flex-shrink:0"></span>Downloads</a>
+      <a href="DMPA FAQs.dc.html" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;color:#1A1238;font-weight:600;font-size:15px;white-space:nowrap;transition:background .2s" style-hover="background:#E7DFFF;color:#1A1238"><span style="width:8px;height:8px;border-radius:50%;background:#AA90FD;flex-shrink:0"></span>FAQs</a>
+    </nav>
+    <a href="DMPA Resources.dc.html" style="flex-shrink:0;white-space:nowrap;display:flex;align-items:center;border:2px solid #9300FF;color:#9300FF;font-weight:700;font-size:15px;padding:10px 18px;border-radius:999px" style-hover="background:#9300FF;color:#fff">Resources</a>
+    </sc-if>
+    <sc-if value="{{ navNarrow }}"><span style="flex:1"></span></sc-if>
+    <a href="https://wa.me/27781680192" style="flex-shrink:0;white-space:nowrap;display:flex;align-items:center;gap:8px;background:#FF017E;color:#fff;font-weight:700;font-size:15px;padding:12px 20px;border-radius:999px" style-hover="background:#E0006E;color:#fff">WhatsApp us</a>
+    <sc-if value="{{ navNarrow }}">
+      <button onClick="{{ toggleMenu }}" aria-expanded="{{ menuOpen }}" aria-label="Menu" style="all:unset;cursor:pointer;flex-shrink:0;width:48px;height:48px;border-radius:50%;border:2px solid #1A1238;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px" style-hover="background:#EFE6FF">
+        <span style="width:18px;height:2.5px;border-radius:2px;background:#1A1238"></span>
+        <span style="width:18px;height:2.5px;border-radius:2px;background:#1A1238"></span>
+        <span style="width:18px;height:2.5px;border-radius:2px;background:#1A1238"></span>
+      </button>
+    </sc-if>
+  </div>
+  <sc-if value="{{ menuOpen }}">
+    <nav aria-label="Mobile" style="pointer-events:auto;max-width:1240px;margin:8px auto 0;background:#fff;border-radius:28px;box-shadow:0 18px 40px rgba(26,18,56,.18);padding:12px 12px 16px;display:flex;flex-direction:column;gap:4px;max-height:calc(100vh - 120px);overflow-y:auto">
+        <a href="#about" onClick="{{ closeMenu }}" style="padding:14px 16px;border-radius:16px;color:#1A1238;font-weight:600;font-size:18px;min-height:48px;display:flex;align-items:center;gap:14px" style-hover="background:#E7DBFF;color:#1A1238"><span style="width:12px;height:12px;border-radius:50%;background:#9300FF;flex-shrink:0"></span>About</a>
+        <a href="#maps" onClick="{{ closeMenu }}" style="padding:14px 16px;border-radius:16px;color:#1A1238;font-weight:600;font-size:18px;min-height:48px;display:flex;align-items:center;gap:14px" style-hover="background:#FFD3E9;color:#1A1238"><span style="width:12px;height:12px;border-radius:50%;background:#FF017E;flex-shrink:0"></span>How to inject</a>
+        <a href="#expect" onClick="{{ closeMenu }}" style="padding:14px 16px;border-radius:16px;color:#1A1238;font-weight:600;font-size:18px;min-height:48px;display:flex;align-items:center;gap:14px" style-hover="background:#FFE1C2;color:#1A1238"><span style="width:12px;height:12px;border-radius:50%;background:#FF8500;flex-shrink:0"></span>What to expect</a>
+        <a href="#reminders" onClick="{{ closeMenu }}" style="padding:14px 16px;border-radius:16px;color:#1A1238;font-weight:600;font-size:18px;min-height:48px;display:flex;align-items:center;gap:14px" style-hover="background:#FFF0B3;color:#1A1238"><span style="width:12px;height:12px;border-radius:50%;background:#F9C70E;flex-shrink:0"></span>Reminders</a>
+        <a href="#compare" onClick="{{ closeMenu }}" style="padding:14px 16px;border-radius:16px;color:#1A1238;font-weight:600;font-size:18px;min-height:48px;display:flex;align-items:center;gap:14px" style-hover="background:#C9F9DD;color:#1A1238"><span style="width:12px;height:12px;border-radius:50%;background:#05BF98;flex-shrink:0"></span>Compare methods</a>
+        <a href="#downloads" onClick="{{ closeMenu }}" style="padding:14px 16px;border-radius:16px;color:#1A1238;font-weight:600;font-size:18px;min-height:48px;display:flex;align-items:center;gap:14px" style-hover="background:#DCE4FE;color:#1A1238"><span style="width:12px;height:12px;border-radius:50%;background:#3626A7;flex-shrink:0"></span>Downloads</a>
+        <a href="DMPA FAQs.dc.html" onClick="{{ closeMenu }}" style="padding:14px 16px;border-radius:16px;color:#1A1238;font-weight:600;font-size:18px;min-height:48px;display:flex;align-items:center;gap:14px" style-hover="background:#E7DFFF;color:#1A1238"><span style="width:12px;height:12px;border-radius:50%;background:#AA90FD;flex-shrink:0"></span>FAQs</a>
+        <a href="DMPA Resources.dc.html" onClick="{{ closeMenu }}" style="margin-top:8px;padding:14px 16px;border-radius:999px;border:2px solid #9300FF;color:#9300FF;font-weight:700;font-size:17px;text-align:center" style-hover="background:#9300FF;color:#fff">Resources</a>
+    </nav>
+  </sc-if>
+</header>
+
+<section id="top" data-screen-label="Hero" style="background:#9300FF;color:#fff;position:relative;overflow:hidden">
+  <div style="position:absolute;width:420px;height:420px;border-radius:50%;background:#AA90FD;opacity:.35;right:-120px;top:-160px"></div>
+  <div style="position:absolute;width:180px;height:180px;border-radius:50%;background:#F9C70E;left:-60px;bottom:-70px"></div>
+  <div style="position:relative;max-width:1240px;margin:0 auto;padding:calc(96px + clamp(48px,8vw,96px)) clamp(16px,4vw,40px) clamp(56px,8vw,104px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,64px);align-items:center">
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <span style="align-self:flex-start;background:#FFE06B;color:#1A1238;font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;padding:8px 14px;border-radius:999px">Your self-injection resource hub</span>
+      <h1 style="margin:0;font-weight:900;font-size:clamp(38px,9vw,84px);line-height:.98;letter-spacing:-.02em;text-wrap:balance">Contraception that <span style="font-family:Satisfy,cursive;font-weight:400;color:#FFE06B;font-size:1.15em;letter-spacing:0">fits</span> your life</h1>
+      <p style="margin:0;font-size:clamp(18px,2vw,21px);line-height:1.5;max-width:34em;text-wrap:pretty">DMPA-SC is an injectable contraceptive you can give yourself at home once you've been trained. One injection every 12 weeks, conveniently and privately.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="#maps" style="display:inline-flex;align-items:center;white-space:nowrap;line-height:1.2;background:#F9C70E;color:#1A1238;font-weight:800;font-size:17px;padding:16px 26px;border-radius:999px" style-hover="background:#FFE06B;color:#1A1238">Learn how to self-inject</a>
+        <a href="#reminders" style="display:inline-flex;align-items:center;white-space:nowrap;line-height:1.2;border:2px solid #fff;color:#fff;font-weight:700;font-size:17px;padding:14px 24px;border-radius:999px" style-hover="background:#fff;color:#9300FF">Work out my next date</a>
+      </div>
+    </div>
+    <sc-if value="{{ showHeroPhoto }}" hint-placeholder-val="{{ true }}">
+      <div style="position:relative;min-height:440px">
+        <div style="position:absolute;inset:0 0 0 8%;border-radius:220px 220px 32px 32px;background:repeating-linear-gradient(135deg,#A833FF 0 12px,#9E1CFF 12px 24px);border:2px solid rgba(255,255,255,.35);display:flex;align-items:flex-end;justify-content:center;padding:28px">
+          <span style="font-family:ui-monospace,Menlo,monospace;font-size:13px;color:#fff;background:rgba(26,18,56,.55);padding:6px 10px;border-radius:6px">photo · confident young woman, everyday setting</span>
+        </div>
+        <div style="position:absolute;left:0;top:42%;transform:rotate(-6deg);white-space:nowrap;background:#FF017E;color:#fff;font-weight:900;font-size:22px;line-height:1.1;padding:18px 22px;border-radius:20px;box-shadow:0 12px 30px rgba(26,18,56,.25)">Your body.<br>Your choice.<br>Your time.</div>
+        <div style="position:absolute;right:-6px;bottom:28px;width:128px;height:128px;gap:2px;border-radius:50%;background:#05BF98;color:#1A1238;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(8deg)"><span style="font-weight:900;font-size:30px;line-height:1">99%</span><span style="font-size:13px;font-weight:600;line-height:1.1">effective</span></div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ showHeroType }}">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div style="background:#FF017E;border-radius:28px;padding:28px;display:flex;flex-direction:column;justify-content:flex-end;min-height:200px"><span style="font-weight:900;font-size:56px;line-height:1">12</span><span style="font-weight:600;font-size:18px">weeks of protection per injection</span></div>
+        <div style="background:#F9C70E;color:#1A1238;border-radius:28px;padding:28px;display:flex;flex-direction:column;justify-content:flex-end;min-height:200px"><span style="font-weight:900;font-size:56px;line-height:1">99%</span><span style="font-weight:600;font-size:18px">effective</span></div>
+        <div style="grid-column:1 / -1;background:#3626A7;border-radius:28px;padding:28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap"><span style="font-family:Satisfy,cursive;font-size:44px;color:#FFE06B;line-height:1">every 6 months</span><span style="font-weight:600;font-size:18px">is all you need to visit the clinic</span></div>
+      </div>
+    </sc-if>
+  </div>
+</section>
+
+<section data-screen-label="Quick links" style="max-width:1240px;margin:0 auto;padding:clamp(48px,7vw,88px) clamp(16px,4vw,40px)">
+  <h2 style="margin:0 0 28px;font-weight:900;font-size:clamp(30px,4vw,44px);letter-spacing:-.01em">What do you need today?</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px">
+    <a href="#about" style="background:#B7C8FC;color:#1A1238;border-radius:24px;padding:26px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;transition:transform .2s" style-hover="transform:translateY(-4px);color:#1A1238"><span style="font-weight:800;font-size:15px;color:#3626A7">01</span><span style="font-weight:800;font-size:24px;line-height:1.15">What is DMPA-SC?</span></a>
+    <a href="#maps" style="background:#FFA6D4;color:#1A1238;border-radius:24px;padding:26px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;transition:transform .2s" style-hover="transform:translateY(-4px);color:#1A1238"><span style="font-weight:800;font-size:15px;color:#B0005A">02</span><span style="font-weight:800;font-size:24px;line-height:1.15">Step-by-step: how to self-inject</span></a>
+    <a href="#expect" style="background:#FFB564;color:#1A1238;border-radius:24px;padding:26px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;transition:transform .2s" style-hover="transform:translateY(-4px);color:#1A1238"><span style="font-weight:800;font-size:15px;color:#8A4500">03</span><span style="font-weight:800;font-size:24px;line-height:1.15">What to expect after</span></a>
+    <a href="#reminders" style="background:#FFE06B;color:#1A1238;border-radius:24px;padding:26px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;transition:transform .2s" style-hover="transform:translateY(-4px);color:#1A1238"><span style="font-weight:800;font-size:15px;color:#7A5C00">04</span><span style="font-weight:800;font-size:24px;line-height:1.15">Find my next injection date</span></a>
+    <a href="#compare" style="background:#80F2A6;color:#1A1238;border-radius:24px;padding:26px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;transition:transform .2s" style-hover="transform:translateY(-4px);color:#1A1238"><span style="font-weight:800;font-size:15px;color:#00684F">05</span><span style="font-weight:800;font-size:24px;line-height:1.15">Compare contraceptive methods</span></a>
+    <a href="#downloads" style="background:#AA90FD;color:#1A1238;border-radius:24px;padding:26px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;transition:transform .2s" style-hover="transform:translateY(-4px);color:#1A1238"><span style="font-weight:800;font-size:15px;color:#3626A7">06</span><span style="font-weight:800;font-size:24px;line-height:1.15">Download guides &amp; cards</span></a>
+  </div>
+</section>
+
+<section id="about" data-screen-label="About DMPA-SC" style="background:#3626A7;color:#fff">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(32px,5vw,72px)">
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <span style="font-family:Satisfy,cursive;font-size:34px;color:#FFE06B;line-height:1">the do-it-yourself option!</span>
+      <h2 style="margin:0;font-weight:900;font-size:clamp(36px,5vw,60px);line-height:1;letter-spacing:-.02em;text-wrap:balance">What is DMPA-SC?</h2>
+      <p style="margin:0;font-size:19px;line-height:1.55;color:#E6EBFF;text-wrap:pretty">A new injectable contraceptive that is safe, effective and easy to use. A healthcare provider gives your first injection and shows you how to do the next one, then you can take a unit home to self-inject after 3 months.</p>
+      <figure style="margin:8px 0 0;background:#FFE06B;color:#1A1238;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:12px">
+        <blockquote style="margin:0;font-weight:800;font-size:clamp(22px,2.4vw,28px);line-height:1.2">In one study, 97% of women said self-injecting was “easy” or “very easy”.</blockquote>
+        <figcaption style="font-size:14px;color:#4A3F70">Burke HM et al. (2018), The Lancet Global Health</figcaption>
+      </figure>
+      <p style="margin:0;font-size:16px;line-height:1.5;color:#C9D3FF">Not comfortable injecting yourself? A health provider can do it for you.</p>
+    </div>
+    <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;align-content:start">
+      <li style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:8px"><span style="font-weight:900;font-size:30px;color:#80F2A6">99%</span><span style="font-size:17px;line-height:1.45">effective at preventing pregnancy</span></li>
+      <li style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:8px"><span style="font-weight:900;font-size:30px;color:#FFA6D4">3 months</span><span style="font-size:17px;line-height:1.45">of protection from one injection</span></li>
+      <li style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:8px"><span style="font-weight:800;font-size:20px;color:#FFE06B">Just under the skin</span><span style="font-size:17px;line-height:1.45">Injected subcutaneously, not into the muscle, with a small, short needle, often less painful.</span></li>
+      <li style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:8px"><span style="font-weight:800;font-size:20px;color:#FFB564">Fewer clinic visits</span><span style="font-size:17px;line-height:1.45">Only every 6 months for refills if you self-inject.</span></li>
+      <li style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:8px"><span style="font-weight:800;font-size:20px;color:#B7C8FC">Control &amp; privacy</span><span style="font-size:17px;line-height:1.45">Fits into your schedule and lifestyle, at home.</span></li>
+      <li style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:8px"><span style="font-weight:800;font-size:20px;color:#AA90FD">Trusted worldwide</span><span style="font-size:17px;line-height:1.45">Already used safely by women in many countries.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="maps" data-screen-label="MAPS method" style="max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(16px,4vw,40px);display:flex;flex-direction:column;gap:32px">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px">
+    <div style="display:flex;flex-direction:column;gap:12px;max-width:640px">
+      <span style="font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:#9300FF">How to self-inject</span>
+      <h2 style="margin:0;font-weight:900;font-size:clamp(36px,5vw,60px);line-height:1;letter-spacing:-.02em">The MAPS method</h2>
+      <p style="margin:0;font-size:18px;line-height:1.5;color:#4A3F70">Four simple steps. Inject in your abdomen (away from the navel) or the front of your thigh.</p>
+    </div>
+    <sc-if value="{{ tabbed }}" hint-placeholder-val="{{ true }}">
+      <span style="font-weight:600;font-size:16px;color:#4A3F70">Step {{ stepNum }} of 4</span>
+    </sc-if>
+  </div>
+
+  <sc-if value="{{ tabbed }}" hint-placeholder-val="{{ true }}">
+    <div role="tablist" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(clamp(calc(25% - 9px),(760px - 100%) * 999,calc(50% - 6px)),1fr));gap:12px">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+        <button role="tab" aria-selected="{{ t.active }}" onClick="{{ t.select }}" style="all:unset;cursor:pointer;background:{{ t.bg }};color:{{ t.fg }};border-radius:24px;padding:20px 22px;display:flex;align-items:center;gap:16px;min-height:96px;transition:background .2s,transform .2s" style-hover="transform:translateY(-2px)" style-focus="outline:3px solid #1A1238;outline-offset:3px">
+          <span style="font-weight:900;font-size:56px;line-height:1">{{ t.letter }}</span>
+          <span style="font-weight:700;font-size:18px;line-height:1.2">{{ t.title }}</span>
+        </button>
+      </sc-for>
+    </div>
+    <div style="background:#fff;border-radius:32px;border:1px solid #ECE6F7;padding:clamp(24px,4vw,48px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(24px,4vw,48px);align-items:start">
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <h3 style="margin:0;font-weight:900;font-size:clamp(28px,3.4vw,40px);line-height:1.05">Step {{ stepNum }}: {{ cur.letter }} – {{ cur.title }}</h3>
+        <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ cur.items }}" as="it" hint-placeholder-count="4">
+            <li style="display:flex;gap:16px;align-items:flex-start;font-size:18px;line-height:1.5">
+              <span style="flex-shrink:0;width:36px;height:36px;border-radius:50%;background:{{ cur.light }};color:#1A1238;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:16px">{{ it.n }}</span>
+              <span style="padding-top:5px">{{ it.text }}</span>
+            </li>
+          </sc-for>
+        </ol>
+        <sc-if value="{{ cur.hasNote }}">
+          <p style="margin:0;background:#FFF0F7;color:#8A0045;font-weight:700;font-size:16px;padding:14px 18px;border-radius:14px">{{ cur.note }}</p>
+        </sc-if>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px">
+          <button onClick="{{ prev }}" disabled="{{ isFirst }}" style="all:unset;cursor:pointer;border:2px solid #1A1238;color:#1A1238;font-weight:700;font-size:16px;padding:12px 22px;border-radius:999px" style-hover="background:#1A1238;color:#fff">Previous</button>
+          <button onClick="{{ next }}" style="all:unset;cursor:pointer;background:#9300FF;color:#fff;font-weight:700;font-size:16px;padding:14px 24px;border-radius:999px" style-hover="background:#3626A7">{{ nextLabel }}</button>
+        </div>
+      </div>
+      <div style="aspect-ratio:4/3;border-radius:24px;background:repeating-linear-gradient(135deg,{{ cur.light }} 0 12px,#fff 12px 24px);display:flex;align-items:flex-end;justify-content:center;padding:20px">
+        <span style="font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#fff;color:#1A1238;padding:6px 10px;border-radius:6px">{{ cur.img }}</span>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ allSteps }}">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:16px">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+        <div style="background:#fff;border:1px solid #ECE6F7;border-radius:28px;overflow:hidden;display:flex;flex-direction:column">
+          <div style="background:{{ s.color }};color:{{ s.fg }};padding:22px;display:flex;align-items:center;gap:14px"><span style="font-weight:900;font-size:56px;line-height:1">{{ s.letter }}</span><span style="font-weight:700;font-size:19px;line-height:1.15">{{ s.title }}</span></div>
+          <ol style="margin:0;padding:22px 22px 26px 42px;display:flex;flex-direction:column;gap:10px;font-size:16px;line-height:1.45">
+            <sc-for list="{{ s.items }}" as="it"><li>{{ it.text }}</li></sc-for>
+          </ol>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:16px">
+    <div style="background:#80F2A6;border-radius:28px;padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:12px">
+      <h3 style="margin:0;font-weight:900;font-size:26px">After you're done</h3>
+      <p style="margin:0;font-size:17px;line-height:1.55">Place the used device straight into a puncture-proof container with a tight lid, like a plastic bottle or jar. Dispose of it in a rubbish bin, or return it to a clinic when you can.</p>
+    </div>
+    <div style="background:#1A1238;color:#fff;border-radius:28px;padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:14px">
+      <h3 style="margin:0;font-weight:900;font-size:26px">Quick checklist</h3>
+      <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ checklist }}" as="c" hint-placeholder-count="5">
+          <li><button onClick="{{ c.toggle }}" style="all:unset;cursor:pointer;display:flex;gap:12px;align-items:center;font-size:16px;line-height:1.4;min-height:32px"><span style="flex-shrink:0;width:26px;height:26px;border-radius:8px;border:2px solid #80F2A6;background:{{ c.box }};color:#1A1238;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:15px">{{ c.mark }}</span><span>{{ c.text }}</span></button></li>
+        </sc-for>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="expect" data-screen-label="What to expect" style="background:#FFA6D4">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(16px,4vw,40px);display:flex;flex-direction:column;gap:32px">
+    <div style="display:flex;flex-direction:column;gap:14px;max-width:720px">
+      <h2 style="margin:0;font-weight:900;font-size:clamp(36px,5vw,60px);line-height:1;letter-spacing:-.02em;text-wrap:balance">What to expect after your injection</h2>
+      <p style="margin:0;font-size:19px;line-height:1.5;text-wrap:pretty">Everyone's body is different, and it's normal to notice some changes. Most side effects are mild and go away over time.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px">
+      <div style="background:#fff;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:12px"><span style="width:44px;height:44px;border-radius:50%;background:#FF017E"></span><h3 style="margin:0;font-weight:800;font-size:22px">Your period may change</h3><p style="margin:0;font-size:16px;line-height:1.55;color:#3D3360">Lighter or heavier bleeding, spotting, or your period may stop. This is safe and common. It does not mean you are pregnant or unwell.</p></div>
+      <div style="background:#fff;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:12px"><span style="width:44px;height:44px;border-radius:12px;background:#FF8500"></span><h3 style="margin:0;font-weight:800;font-size:22px">Small body changes</h3><p style="margin:0;font-size:16px;line-height:1.55;color:#3D3360">Some women notice mild headaches or small changes in weight. These are usually temporary.</p></div>
+      <div style="background:#fff;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:12px"><span style="width:44px;height:44px;border-radius:50%;background:#05BF98"></span><h3 style="margin:0;font-weight:800;font-size:22px">A sore injection spot</h3><p style="margin:0;font-size:16px;line-height:1.55;color:#3D3360">Slight pain, redness or swelling where you injected should disappear in a few days.</p></div>
+      <div style="background:#fff;border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:12px"><span style="width:44px;height:44px;border-radius:12px;background:#9300FF;transform:rotate(45deg) scale(.8)"></span><h3 style="margin:0;font-weight:800;font-size:22px">Mood or energy shifts</h3><p style="margin:0;font-size:16px;line-height:1.55;color:#3D3360">If changes in mood or desire bother you, talk to your nurse or health worker. Small adjustments can help.</p></div>
+    </div>
+    <div style="background:#1A1238;color:#fff;border-radius:28px;padding:clamp(24px,3vw,36px);display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between">
+      <p style="margin:0;font-size:18px;line-height:1.5;max-width:46em;text-wrap:pretty"><strong style="color:#FFE06B">Remember:</strong> these effects are normal while your body adjusts. If you have heavy bleeding or anything feels worrying, contact your clinic. You're never alone in this.</p>
+      <a href="https://wa.me/27781680192" style="flex-shrink:0;background:#FF017E;color:#fff;font-weight:700;padding:14px 22px;border-radius:999px" style-hover="background:#E0006E;color:#fff">WhatsApp for advice</a>
+    </div>
+  </div>
+</section>
+
+<section id="reminders" data-screen-label="Reminders" style="background:#F9C70E">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(32px,5vw,64px);align-items:start">
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <span style="font-family:Satisfy,cursive;font-size:34px;color:#3626A7;line-height:1">don't miss a date</span>
+      <h2 style="margin:0;font-weight:900;font-size:clamp(36px,5vw,60px);line-height:1;letter-spacing:-.02em">Remember your next injection</h2>
+      <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px">
+        <li style="display:flex;gap:14px;font-size:18px;line-height:1.45"><span style="flex-shrink:0;width:12px;height:12px;border-radius:50%;background:#3626A7;margin-top:8px"></span>Inject every 12 weeks (about 3 months) to keep preventing pregnancy.</li>
+        <li style="display:flex;gap:14px;font-size:18px;line-height:1.45"><span style="flex-shrink:0;width:12px;height:12px;border-radius:50%;background:#3626A7;margin-top:8px"></span>Write the date on your reminder card or phone calendar before leaving the clinic.</li>
+        <li style="display:flex;gap:14px;font-size:18px;line-height:1.45"><span style="flex-shrink:0;width:12px;height:12px;border-radius:50%;background:#3626A7;margin-top:8px"></span>Set reminders a few days before and on the day itself.</li>
+        <li style="display:flex;gap:14px;font-size:18px;line-height:1.45"><span style="flex-shrink:0;width:12px;height:12px;border-radius:50%;background:#3626A7;margin-top:8px"></span>Keep your next unit somewhere safe and easy to remember, like your toiletry bag or with your sanitary pads.</li>
+        <li style="display:flex;gap:14px;font-size:18px;line-height:1.45"><span style="flex-shrink:0;width:12px;height:12px;border-radius:50%;background:#3626A7;margin-top:8px"></span>Missed your window? Contact your clinic as soon as possible.</li>
+      </ul>
+    </div>
+    <div style="background:#fff;border-radius:32px;padding:clamp(24px,3.5vw,40px);display:flex;flex-direction:column;gap:22px;box-shadow:0 20px 50px rgba(122,92,0,.18)">
+      <h3 style="margin:0;font-weight:900;font-size:28px">Next-date calculator</h3>
+      <label style="display:flex;flex-direction:column;gap:8px;font-weight:600;font-size:16px">When was your last injection?
+        <input type="date" value="{{ lastDate }}" onChange="{{ setLast }}" style="font-size:18px;padding:14px 16px;border:2px solid #1A1238;border-radius:14px;background:#FBF9F6;color:#1A1238;min-height:52px">
+      </label>
+      <div style="background:#3626A7;color:#fff;border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:15px;font-weight:600;color:#C9D3FF">Your next injection</span>
+        <span style="font-weight:900;font-size:clamp(26px,3vw,34px);line-height:1.1">{{ nextDate }}</span>
+        <span style="font-size:15px;color:#E6EBFF">{{ countdown }}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:16px;border-top:1px dashed #D9D2EA;padding-top:18px"><span style="color:#4A3F70">Set a reminder for</span><strong>{{ remindDate }}</strong></div>
+      <button onClick="{{ downloadIcs }}" style="all:unset;cursor:pointer;text-align:center;background:#9300FF;color:#fff;font-weight:800;font-size:17px;padding:16px 24px;border-radius:999px" style-hover="background:#3626A7">Add to my phone calendar</button>
+    </div>
+  </div>
+</section>
+
+<section id="compare" data-screen-label="Compare methods" style="max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(16px,4vw,40px);display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;flex-direction:column;gap:14px;max-width:760px">
+    <h2 style="margin:0;font-weight:900;font-size:clamp(36px,5vw,60px);line-height:1;letter-spacing:-.02em">Choose what <span style="font-family:Satisfy,cursive;font-weight:400;color:#9300FF;letter-spacing:0">works</span> for you</h2>
+    <p style="margin:0;font-size:19px;line-height:1.5;color:#4A3F70;text-wrap:pretty">Different methods work for different people. You can get contraceptives for free at your local public clinic or hospital. This is your right.</p>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+      <button onClick="{{ f.select }}" aria-pressed="{{ f.active }}" style="all:unset;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};border:2px solid #1A1238;font-weight:700;font-size:15px;padding:10px 18px;border-radius:999px;min-height:24px">{{ f.label }}</button>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:16px">
+    <sc-for list="{{ methods }}" as="m" hint-placeholder-count="6">
+      <article style="background:{{ m.bg }};color:{{ m.fg }};border:1px solid {{ m.border }};border-radius:28px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+          <h3 style="margin:0;font-weight:800;font-size:21px;line-height:1.2">{{ m.name }}</h3>
+          <span style="flex-shrink:0;background:{{ m.pillBg }};color:#1A1238;font-weight:900;font-size:17px;padding:6px 12px;border-radius:999px">{{ m.eff }}</span>
+        </div>
+        <dl style="margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:15px;line-height:1.4">
+          <dt style="opacity:.75">Lasts</dt><dd style="margin:0;font-weight:600">{{ m.lasts }}</dd>
+          <dt style="opacity:.75">Clinic</dt><dd style="margin:0;font-weight:600">{{ m.clinic }}</dd>
+        </dl>
+        <p style="margin:0;font-size:15px;line-height:1.5;opacity:.9">{{ m.note }}</p>
+      </article>
+    </sc-for>
+  </div>
+</section>
+
+<section data-screen-label="FAQ" style="background:#B7C8FC">
+  <div style="max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(16px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:clamp(32px,5vw,64px);align-items:start">
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <h2 style="margin:0;font-weight:900;font-size:clamp(36px,5vw,60px);line-height:1;letter-spacing:-.02em">Good to know</h2>
+      <p style="margin:0;font-size:19px;line-height:1.5;color:#2A2160">Honest answers to the questions women ask most.</p>
+      <a href="DMPA FAQs.dc.html" style="align-self:flex-start;font-weight:800;font-size:17px;color:#3626A7;border-bottom:2px solid #3626A7;padding-bottom:2px" style-hover="color:#9300FF;border-color:#9300FF">See all 108 FAQs →</a>
+      <div style="background:#3626A7;color:#fff;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:10px">
+        <strong style="font-size:18px;color:#FFE06B">Do not inject if…</strong>
+        <span style="font-size:16px;line-height:1.5">you are seriously ill, or the solution looks cloudy, discoloured or is expired. Never share your injection device.</span>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <sc-for list="{{ faqs }}" as="q" hint-placeholder-count="6">
+        <div style="background:#fff;border-radius:20px;overflow:hidden">
+          <button onClick="{{ q.toggle }}" aria-expanded="{{ q.open }}" style="all:unset;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;width:100%;box-sizing:border-box;padding:20px 22px;font-weight:700;font-size:18px;line-height:1.3;min-height:44px" style-focus="outline:3px solid #3626A7;outline-offset:-3px">
+            <span>{{ q.q }}</span>
+            <span style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:{{ q.iconBg }};color:{{ q.iconFg }};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px">{{ q.icon }}</span>
+          </button>
+          <sc-if value="{{ q.open }}">
+            <p style="margin:0;padding:0 22px 22px;font-size:16px;line-height:1.6;color:#3D3360">{{ q.a }}</p>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="downloads" data-screen-label="Downloads" style="max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(16px,4vw,40px);display:flex;flex-direction:column;gap:28px">
+  <div style="display:flex;flex-direction:column;gap:14px;max-width:720px">
+    <h2 style="margin:0;font-weight:900;font-size:clamp(36px,5vw,60px);line-height:1;letter-spacing:-.02em">Take it with you</h2>
+    <p style="margin:0;font-size:19px;line-height:1.5;color:#4A3F70">Guides to keep and refer to at home. Print them or save them to your phone.</p>
+    <a href="DMPA Resources.dc.html" style="align-self:flex-start;font-weight:800;font-size:17px;color:#9300FF;border-bottom:2px solid #9300FF;padding-bottom:2px" style-hover="color:#3626A7;border-color:#3626A7">See all resources →</a>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px">
+    <sc-for list="{{ downloads }}" as="d" hint-placeholder-count="3">
+      <article style="display:flex;flex-direction:column;gap:16px">
+        <sc-if value="{{ d.hasThumb }}">
+          <img src="{{ d.thumbUrl }}" alt="" loading="lazy" style="display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:24px;background:{{ d.tint2 }}">
+        </sc-if>
+        <sc-if value="{{ d.noThumb }}">
+          <div style="aspect-ratio:4/3;border-radius:24px;background:repeating-linear-gradient(135deg,{{ d.tint }} 0 12px,{{ d.tint2 }} 12px 24px);display:flex;align-items:flex-end;justify-content:center;padding:18px"><span style="font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#fff;padding:6px 10px;border-radius:6px">cover · {{ d.title }}</span></div>
+        </sc-if>
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:14px;font-weight:700;color:{{ d.ink }};text-transform:uppercase;letter-spacing:.06em">{{ d.kicker }}</span><h3 style="margin:0;font-weight:800;font-size:22px">{{ d.title }}</h3><p style="margin:0;font-size:16px;line-height:1.5;color:#4A3F70">{{ d.description }}</p></div>
+        <sc-if value="{{ d.hasFile }}">
+          <a href="{{ d.fileUrl }}" target="_blank" rel="noopener" style="align-self:flex-start;border:2px solid #1A1238;color:#1A1238;font-weight:700;padding:12px 20px;border-radius:999px" style-hover="background:#1A1238;color:#fff">Download {{ d.format }}</a>
+        </sc-if>
+        <sc-if value="{{ d.noFile }}">
+          <span aria-disabled="true" style="align-self:flex-start;border:2px dashed #B8AED0;color:#6B6188;font-weight:700;padding:12px 20px;border-radius:999px">Coming soon</span>
+        </sc-if>
+      </article>
+    </sc-for>
+  </div>
+</section>
+
+<footer style="background:#9300FF;color:#fff;position:relative;overflow:hidden">
+  <div style="position:absolute;width:260px;height:260px;border-radius:50%;background:#FF017E;right:-80px;bottom:-110px"></div>
+  <div style="position:relative;max-width:1240px;margin:0 auto;padding:clamp(56px,8vw,96px) clamp(16px,4vw,40px) 40px;display:flex;flex-direction:column;gap:48px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:40px;align-items:end">
+      <h2 style="margin:0;font-weight:900;font-size:clamp(40px,6vw,76px);line-height:1;letter-spacing:-.02em;text-wrap:balance">Because <span style="font-family:Satisfy,cursive;font-weight:400;color:#FFE06B;letter-spacing:0">freedom</span> looks good on you.</h2>
+      <div style="background:#fff;color:#1A1238;border-radius:28px;padding:26px;display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+        <img src="assets/whatsapp-qr.svg" alt="QR code: scan to chat to us on WhatsApp" width="112" height="112" style="width:112px;height:112px;flex-shrink:0;border-radius:14px;border:1px solid #ECE6F7;display:block">
+        <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+          <span style="font-weight:600;font-size:15px;color:#4A3F70">Questions or support? Chat to us</span>
+          <a href="https://wa.me/27781680192" style="font-weight:900;font-size:28px;color:#9300FF">078 168 0192</a>
+          <span style="font-size:15px">Follow <strong>@IChooseMeSA</strong></span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.3);padding-top:28px">
+      <img src="assets/logo-full-white.png" alt="DMPA self-inject: Contraception Made Simple" style="height:72px;width:auto;display:block">
+      <p style="margin:0;font-size:14px;line-height:1.5;max-width:30em;color:#F1E6FF">This hub supports, but does not replace, advice from your nurse or health worker. DMPA-SC does not protect against HIV or STIs.</p>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ showTop }}">
+  <a href="#top" aria-label="Back to top" style="position:fixed;right:clamp(16px,3vw,32px);bottom:clamp(16px,3vw,32px);z-index:30;width:56px;height:56px;border-radius:50%;background:#1A1238;color:#FFE06B;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px rgba(26,18,56,.3);transition:transform .2s" style-hover="transform:translateY(-3px);background:#9300FF;color:#fff"><span style="width:14px;height:14px;border-top:3.5px solid currentColor;border-left:3.5px solid currentColor;border-radius:2px;transform:translateY(3px) rotate(45deg)"></span></a>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Photo&quot;,&quot;Type only&quot;],&quot;default&quot;:&quot;Photo&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;mapsLayout&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Tabs&quot;,&quot;All steps&quot;],&quot;default&quot;:&quot;Tabs&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const STEPS = [
+  { letter: 'M', title: 'Mix & check', color: '#FF017E', fg: '#fff', light: '#FFA6D4', img: 'photo · hand washing / opening the pouch',
+    items: ['Wash your hands and gather your supplies.', 'Open the pouch and remove the device.', 'Shake the device for about 30 seconds.', 'Check for any damage or leaks.'] },
+  { letter: 'A', title: 'Activate', color: '#FF8500', fg: '#1A1238', light: '#FFB564', img: 'photo · closing the gap, removing the cap',
+    items: ['Hold the device by the port, with the needle pointing upward.', 'Push the needle cap firmly into the port to close the gap. This activates the device.', 'Remove the needle cap.'] },
+  { letter: 'P', title: 'Pinch & insert', color: '#05BF98', fg: '#1A1238', light: '#80F2A6', img: 'photo · abdomen and thigh injection sites',
+    items: ['Choose an injection site: abdomen (away from the navel) or front of thigh. Avoid scars, moles or bruises.', 'Clean the area if visibly dirty. Pinch the skin to create a “tent”.', 'Insert the needle at a downward angle until the port touches the skin fully.'] },
+  { letter: 'S', title: 'Slowly press', color: '#9300FF', fg: '#fff', light: '#AA90FD', img: 'photo · pressing the reservoir flat',
+    items: ['Press the reservoir slowly for 5–7 seconds until it is flat.', 'Remove the needle, then let go of the skin. Apply gentle pressure if needed. Don’t rub.', 'It’s okay if a small amount of liquid remains in the device.'], note: 'Do not put the needle cap back on.' },
+];
+const METHODS = [
+  { name: 'DMPA-SC self-injection', eff: '99%', lasts: '3 months', clinic: 'Every 6 months', cat: 'Injectable', hi: true, note: 'Small, light, short needle just under the skin. A take-home option that reduces clinic visits without a long-term commitment.' },
+  { name: 'DMPA-SC by a provider', eff: '99%', lasts: '3 months', clinic: 'Every 3 months', cat: 'Injectable', note: 'The same small injection under the skin, given by a health provider at the clinic.' },
+  { name: 'Other injections (intramuscular)', eff: '97%', lasts: '2 or 3 months', clinic: 'Every 2 or 3 months', cat: 'Injectable', note: 'Injected into the muscle. May cause irregular periods, weight gain from increased appetite and mild headaches.' },
+  { name: 'Implant', eff: '99%', lasts: '3 years', clinic: 'Every 3 years', cat: 'Long-acting', note: 'Can cause irregular, lighter or heavier bleeding and mild headaches, but works for a full 3 years.' },
+  { name: 'Hormonal IUD (loop)', eff: '99%', lasts: '5 years', clinic: 'Every 5 years', cat: 'Long-acting', note: 'Long-acting prevention. May cause irregular periods, or your period may stop.' },
+  { name: 'Copper IUD (loop)', eff: '99%', lasts: '5–10 years', clinic: 'Every 5–10 years', cat: 'Long-acting', note: 'Non-hormonal. May cause heavier or longer periods, cramping and spotting.' },
+  { name: 'Oral pills', eff: '97%', lasts: 'Daily', clinic: 'Every 6 months', cat: 'Short-acting', note: 'Taken every day at the same time, no skipping!' },
+  { name: 'Condoms', eff: '85%', lasts: 'Once-off', clinic: 'When needed', cat: 'Short-acting', note: 'Must be used every time. The only method that also protects against HIV and STIs.' },
+  { name: 'Emergency pill', eff: '80–95%', lasts: 'Once-off', clinic: 'When needed', cat: 'Short-acting', note: 'Use within 5 days of unprotected sex, the sooner the better.' },
+  { name: 'Sterilisation / vasectomy', eff: '90–95%', lasts: 'Forever', clinic: 'Only for check-ups', cat: 'Long-acting', note: 'Permanent, so you need to be sure. Does not affect sexual performance.' },
+];
+const FILTERS = ['All', 'Injectable', 'Long-acting', 'Short-acting'];
+const FAQS = [
+  { q: 'Does it hurt?', a: 'DMPA-SC uses a small, short needle injected just under the skin, so it is often less painful than other injectables. You may feel slight soreness at the spot for a few days.' },
+  { q: 'Does DMPA-SC protect against HIV or STIs?', a: 'No. Use condoms as well if you need protection against HIV and STIs.' },
+  { q: 'What if I miss my injection date?', a: 'Contact your clinic or health worker as soon as possible, or WhatsApp us on 078 168 0192.' },
+  { q: 'Can I stop or switch methods?', a: 'Yes, at any time. Talk to your nurse about what works best for you. DMPA-SC prevents pregnancy for 3 months after your last injection; fertility returns after that, though it may take a few months.' },
+  { q: 'What if I don’t want to inject myself?', a: 'That’s okay. A health provider can give you the injection at the clinic every 3 months.' },
+  { q: 'Where can I get it?', a: 'Contraceptives are free at your local public clinic or hospital. Your first injection is given by a provider, who will train you to do the next one.' },
+];
+const CHECK = ['I chose a clean injection space.', 'I cleaned my hands and the site.', 'I pinched the skin and inserted the device.', 'I held until the reservoir was flat.', 'I disposed of the device safely.', 'I marked my next injection date.'];
+const DL_TINTS = { Guide: ['#AA90FD', '#EFE9FF', '#9300FF'], Card: ['#FFE06B', '#FFF7D6', '#8A6400'], Poster: ['#FFA6D4', '#FFEFF7', '#C10060'], Video: ['#FFB564', '#FFF1E2', '#A85400'] };
+const DL_FALLBACK = ['#FFA6D4', '#FFEFF7', '#C10060'];
+const hasRealFile = u => !!u && u !== '#';
+const iso = d => d.toISOString().slice(0, 10);
+const fmt = d => d.toLocaleDateString('en-ZA', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+class Component extends DCLogic {
+  componentDidMount() {
+    this.onNav = () => { const n = window.innerWidth < 1200; if (n !== this.state.navNarrow) this.setState({ navNarrow: n, menuOpen: false }); };
+    window.addEventListener('resize', this.onNav); this.onNav(); this.onScroll = () => { const v = window.scrollY > 600; if (v !== this.state.showTop) this.setState({ showTop: v }); }; window.addEventListener('scroll', this.onScroll, { passive: true }); this.onScroll(); this.loadDownloads(); }
+  componentWillUnmount() { window.removeEventListener('scroll', this.onScroll); window.removeEventListener('resize', this.onNav); }
+  async loadDownloads() {
+    try {
+      const mod = await import(new URL('firebase-resources.js', location.href).href);
+      const { items } = await mod.loadResources();
+      this.setState({ downloads: items.filter(r => r.audience === 'For women').slice(0, 3) });
+    } catch (e) { console.error('Downloads failed to load', e); }
+  }
+  state = { navNarrow: false, menuOpen: false, showTop: false, step: 0, lastDate: iso(new Date()), filter: 'All', faq: 0, checked: {}, downloads: [] };
+  next() { const d = new Date(this.state.lastDate + 'T12:00:00'); if (isNaN(d)) return null; const day = d.getDate(); d.setDate(1); d.setMonth(d.getMonth() + 3); const last = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate(); d.setDate(Math.min(day, last)); return d; }
+  downloadIcs = () => {
+    const n = this.next(); if (!n) return;
+    const ymd = iso(n).replace(/-/g, '');
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//DMPA self-inject//EN', 'BEGIN:VEVENT', 'UID:' + ymd + '@dmpa-selfinject', 'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z', 'DTSTART;VALUE=DATE:' + ymd, 'SUMMARY:DMPA-SC injection day', 'DESCRIPTION:Time for your DMPA-SC self-injection. Questions? WhatsApp 078 168 0192', 'BEGIN:VALARM', 'TRIGGER:-P3D', 'ACTION:DISPLAY', 'DESCRIPTION:DMPA-SC injection in 3 days', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'dmpa-next-injection.ics'; a.click();
+  };
+  renderVals() {
+    const tabbed = (this.props.mapsLayout ?? 'Tabs') === 'Tabs';
+    const s = this.state.step, cur = STEPS[s];
+    const n = this.next();
+    const days = n ? Math.round((n - new Date().setHours(12, 0, 0, 0)) / 864e5) : null;
+    const remind = n ? new Date(n.getTime() - 3 * 864e5) : null;
+    const filt = this.state.filter;
+    return {
+      navWide: !this.state.navNarrow, navNarrow: this.state.navNarrow, menuOpen: this.state.navNarrow && this.state.menuOpen,
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })), closeMenu: () => this.setState({ menuOpen: false }),
+      showTop: this.state.showTop,
+      showHeroPhoto: (this.props.heroStyle ?? 'Photo') === 'Photo',
+      showHeroType: (this.props.heroStyle ?? 'Photo') === 'Type only',
+      tabbed, allSteps: !tabbed,
+      stepNum: s + 1, isFirst: s === 0,
+      nextLabel: s === 3 ? 'Start again' : 'Next step',
+      prev: () => this.setState({ step: Math.max(0, s - 1) }),
+      next: () => this.setState({ step: (s + 1) % 4 }),
+      tabs: STEPS.map((t, i) => ({ ...t, active: i === s, bg: i === s ? t.color : t.light, fg: i === s ? t.fg : '#1A1238', select: () => this.setState({ step: i }) })),
+      cur: { ...cur, items: cur.items.map((text, i) => ({ n: i + 1, text })), hasNote: !!cur.note },
+      steps: STEPS.map(t => ({ ...t, items: t.items.concat(t.note ? [t.note] : []).map(text => ({ text })) })),
+      checklist: CHECK.map((text, i) => { const on = !!this.state.checked[i]; return { text, box: on ? '#80F2A6' : 'transparent', mark: on ? '✓' : '', toggle: () => this.setState(st => ({ checked: { ...st.checked, [i]: !on } })) }; }),
+      lastDate: this.state.lastDate,
+      setLast: e => this.setState({ lastDate: e.target.value }),
+      nextDate: n ? fmt(n) : 'Pick a date',
+      remindDate: remind ? fmt(remind) : 'Not set',
+      countdown: days == null ? '' : days > 1 ? `That's in ${days} days (3 months after your last injection)` : days === 1 ? 'That’s tomorrow!' : days === 0 ? 'That’s today!' : `That was ${-days} days ago, contact your clinic`,
+      downloadIcs: this.downloadIcs,
+      filters: FILTERS.map(label => ({ label, active: label === filt, bg: label === filt ? '#1A1238' : 'transparent', fg: label === filt ? '#fff' : '#1A1238', select: () => this.setState({ filter: label }) })),
+      methods: METHODS.filter(m => filt === 'All' || m.cat === filt).map(m => ({ ...m, bg: m.hi ? '#9300FF' : '#fff', fg: m.hi ? '#fff' : '#1A1238', border: m.hi ? '#9300FF' : '#ECE6F7', pillBg: m.hi ? '#FFE06B' : '#80F2A6' })),
+      downloads: this.state.downloads.map(r => { const t = DL_TINTS[r.type] || DL_FALLBACK; return { ...r, tint: t[0], tint2: t[1], ink: t[2], kicker: [r.type, r.details].filter(Boolean).join(' · '), hasThumb: !!r.thumbUrl, noThumb: !r.thumbUrl, hasFile: hasRealFile(r.fileUrl), noFile: !hasRealFile(r.fileUrl), format: r.format || '' }; }),
+      faqs: FAQS.map((f, i) => { const open = this.state.faq === i; return { ...f, open, icon: open ? '–' : '+', iconBg: open ? '#3626A7' : '#EEF2FF', iconFg: open ? '#fff' : '#3626A7', toggle: () => this.setState({ faq: open ? -1 : i }) }; }),
+    };
+  }
+}
+</script>
+</body>
+</html>
