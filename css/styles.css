@@ -180,6 +180,11 @@ ul[class], ol[class] { list-style: none; margin: 0; padding: 0; }
 .btn--lg { font-size: 17px; padding: 14px 26px; min-height: 56px; }
 .btn--sm { font-size: 15px; padding: 8px 16px; min-height: 44px; }
 .btn--block { width: 100%; }
+.calculator__actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 10px; }
+.calculator__actions-title, .calculator__hint { grid-column: 1 / -1; }
+.calculator__actions-title { font-weight: 700; font-size: 16px; color: var(--ink); }
+.calculator__hint { font-size: 14px; line-height: 1.45; color: var(--ink-2); }
+.calculator__actions .btn[aria-disabled="true"] { opacity: .5; pointer-events: none; }
 .btn--primary { background: var(--purple); color: #fff; }
 .btn--primary:hover { background: var(--indigo); color: #fff; }
 .btn--whatsapp { background: var(--pink); color: #fff; }

@@ -93,6 +93,8 @@
   function renderCalc() {
     const s = schedule();
     out.ics.disabled = !s;
+    if (s) out.google.href = googleUrl(s); else out.google.removeAttribute('href');
+    out.google.setAttribute('aria-disabled', String(!s));
     if (!s) {
       out.due.textContent = 'Pick a date';
       out.countdown.textContent = out.earliest.textContent = out.latest.textContent = '–';
@@ -106,23 +108,73 @@
     out.latest.textContent = fmtShort(s.latest);
   }
 
+  /* Calendar export. Two all-day events: the due date, and the last day of the
+     window. Reminders are relative to midnight at the start of the event, so
+     "-P2DT15H" is 9am three days before and "PT9H" is 9am on the day. */
+  const ymd = d => iso(d).replace(/-/g, '');
+  const eventText = s => {
+    const wa = DMPA.config.whatsapp.display;
+    return {
+      due: {
+        title: 'DMPA-SC injection day',
+        details: `Time for your DMPA-SC self-injection. You can inject from ${fmtShort(s.earliest)} up to ${fmtShort(s.latest)}. Questions? WhatsApp ${wa}`,
+      },
+      last: {
+        title: 'Last day for your DMPA-SC injection',
+        details: `Today is the last day to inject DMPA-SC. If you can’t inject today, use condoms and contact your clinic. Questions? WhatsApp ${wa}`,
+      },
+    };
+  };
+
+  function googleUrl(s) {
+    const { due } = eventText(s);
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: due.title,
+      dates: `${ymd(s.due)}/${ymd(addDays(s.due, 1))}`,
+      details: `${due.details}\n\nLast day to inject: ${fmt(s.latest)}.`,
+    });
+    return `https://calendar.google.com/calendar/render?${params}`;
+  }
+
+  // RFC 5545: escape text values and fold lines longer than 75 octets
+  const icsText = t => t.replace(/[\\;,]/g, m => '\\' + m).replace(/\n/g, '\\n');
+  const fold = line => {
+    const bytes = new TextEncoder().encode(line);
+    if (bytes.length <= 75) return line;
+    const parts = []; let cur = '';
+    for (const ch of line) {
+      if (new TextEncoder().encode(cur + ch).length > (parts.length ? 74 : 75)) { parts.push(cur); cur = ''; }
+      cur += ch;
+    }
+    parts.push(cur);
+    return parts.join('\r\n ');
+  };
+
   function downloadIcs() {
     const s = schedule();
     if (!s) return;
-    const ymd = iso(s.due).replace(/-/g, '');
-    const wa = DMPA.config.whatsapp.display;
-    const ics = [
-      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//DMPA self-inject//EN', 'CALSCALE:GREGORIAN',
+    const text = eventText(s);
+    const stamp = `${new Date().toISOString().replace(/[-:]/g, '').slice(0, 15)}Z`;
+    const alarm = (trigger, desc) => ['BEGIN:VALARM', `TRIGGER:${trigger}`, 'ACTION:DISPLAY', `DESCRIPTION:${icsText(desc)}`, 'END:VALARM'];
+    const event = (key, day, alarms) => [
       'BEGIN:VEVENT',
-      `UID:${ymd}-${Date.now()}@dmpa-selfinject`,
-      `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').slice(0, 15)}Z`,
-      `DTSTART;VALUE=DATE:${ymd}`,
-      'SUMMARY:DMPA-SC injection day',
-      `DESCRIPTION:Time for your DMPA-SC self-injection. You can inject up to 4 weeks after today. Questions? WhatsApp ${wa}`,
-      'BEGIN:VALARM', 'TRIGGER:-P3D', 'ACTION:DISPLAY', 'DESCRIPTION:DMPA-SC injection in 3 days', 'END:VALARM',
-      'BEGIN:VALARM', 'TRIGGER:PT9H', 'ACTION:DISPLAY', 'DESCRIPTION:DMPA-SC injection today', 'END:VALARM',
-      'END:VEVENT', 'END:VCALENDAR',
-    ].join('\r\n');
+      `UID:${key}-${ymd(day)}-${Date.now()}@dmpa-selfinject`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART;VALUE=DATE:${ymd(day)}`,
+      `DTEND;VALUE=DATE:${ymd(addDays(day, 1))}`,
+      `SUMMARY:${icsText(text[key].title)}`,
+      `DESCRIPTION:${icsText(text[key].details)}`,
+      'TRANSP:TRANSPARENT',
+      ...alarms.flat(),
+      'END:VEVENT',
+    ];
+    const ics = [
+      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//DMPA self-inject//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+      ...event('due', s.due, [alarm('-P2DT15H', 'DMPA-SC injection in 3 days'), alarm('PT9H', 'DMPA-SC injection today')]),
+      ...event('last', s.latest, [alarm('-P2DT15H', 'Only 3 days left to inject DMPA-SC'), alarm('PT9H', 'Last day to inject DMPA-SC')]),
+      'END:VCALENDAR',
+    ].map(fold).join('\r\n');
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
     a.download = 'dmpa-next-injection.ics';
