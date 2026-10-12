@@ -26,7 +26,11 @@ The site can be hosted on any static host (GitHub Pages, Netlify, Firebase Hosti
 ├── index.html               Home page
 ├── faqs.html                FAQ page
 ├── resources.html           Resource library
+├── privacy.html             Privacy policy (POPIA)
+├── terms.html               Terms of use
 ├── 404.html                 Not-found page
+├── robots.txt, sitemap.xml  Search engine files (domain placeholder, see below)
+├── favicon.ico, site.webmanifest
 ├── css/
 │   └── styles.css           The site stylesheet: brand tokens, components, page sections
 ├── js/
@@ -41,10 +45,12 @@ The site can be hosted on any static host (GitHub Pages, Netlify, Firebase Hosti
 │       ├── faq-data.js           FAQ content
 │       └── sample-resources.js   Placeholder resources, used as seed data too
 ├── assets/
-│   └── images/              Logos, WhatsApp QR code
+│   ├── images/              Logos, hero photo, social share image (og-image.jpg), WhatsApp QR code
+│   └── icons/               Favicons and app icons
 ├── docs/
 │   └── DATABASE.md          Firebase setup, schema and security rules
 ├── design-source/           Brand and print source files (not served to users)
+│   ├── social/og-image.html Layout used to render assets/images/og-image.jpg (1200×630)
 │   ├── brand/               Logo PNGs and the colour palette
 │   ├── print/               Pocketbook and one-pager InDesign files
 │   └── content/             Chatbot FAQ document (source for faq-data.js)
@@ -78,3 +84,12 @@ See [`docs/DATABASE.md`](docs/DATABASE.md). In short: create a Firebase project,
 - [ ] Export the Pocketbook, one-pager and reminder card to PDF and upload them as resources.
 - [ ] Connect Firebase (see above).
 - [ ] Clinical and content sign-off on all copy.
+
+## Before going live
+
+- **Domain.** `robots.txt`, `sitemap.xml` and the `canonical` / `og:url` / `og:image` tags use the placeholder `https://dmpa-selfinject.example`. Replace it everywhere with the real address:
+  ```bash
+  grep -rl 'dmpa-selfinject.example' --include='*.html' --include='*.xml' --include='*.txt' . | xargs sed -i 's#https://dmpa-selfinject.example#https://YOUR-DOMAIN#g'
+  ```
+- **Legal pages.** `privacy.html` and `terms.html` are drafts. Have both pages reviewed before publishing.
+- **Cookie notice.** The site sets no cookies; the notice only records in `localStorage` that it was dismissed. If analytics are added later, it must become a consent banner that blocks them until accepted.

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /design-source/
+Disallow: /archive/
+Disallow: /uploads/
+Disallow: /docs/
+
+Sitemap: https://dmpa-selfinject.example/sitemap.xml

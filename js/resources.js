@@ -7,11 +7,10 @@
   };
   const state = { all: null, filter: 'All', query: '' };
 
-  const skeleton = '<div class="skeleton" aria-hidden="true"><div class="skeleton__img"></div><div class="skeleton__body"><div class="skeleton__line" style="width:40%"></div><div class="skeleton__line" style="width:80%;height:22px"></div><div class="skeleton__line" style="width:95%"></div></div></div>';
 
   const card = r => {
     const cover = r.thumbUrl
-      ? `<img class="resource__thumb" src="${esc(r.thumbUrl)}" alt="" loading="lazy">`
+      ? `<img class="resource__thumb" src="${esc(r.thumbUrl)}" alt="Cover of ${esc(r.title)}" loading="lazy">`
       : `<div class="resource__cover"><span class="resource__cover-type">${esc(r.type)}</span><span class="resource__cover-title">${esc(r.title)}</span></div>`;
     const action = DMPA.resources.hasFile(r)
       ? `<a class="btn btn--sm btn--dark" href="${esc(r.fileUrl)}" target="_blank" rel="noopener" download aria-label="Download ${esc(r.title)}">Download</a>`
@@ -42,7 +41,7 @@
   async function load() {
     els.error.hidden = true;
     els.list.setAttribute('aria-busy', 'true');
-    els.list.innerHTML = skeleton.repeat(3);
+    els.list.innerHTML = DMPA.util.skeleton(3);
     els.count.textContent = 'Loading resources…';
     try {
       const { items, source } = await DMPA.resources.load({ fresh: true });

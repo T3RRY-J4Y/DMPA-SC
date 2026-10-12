@@ -6,15 +6,33 @@
   <title>DMPA self-inject · Contraception Made Simple</title>
   <meta name="description" content="Resource hub for DMPA-SC self-injectable contraception: how to self-inject with the MAPS method, a next-injection date calculator, side effects, method comparison and FAQs.">
   <meta name="theme-color" content="#9300FF">
+  <link rel="canonical" href="https://dmpa-selfinject.example/">
+  <meta property="og:site_name" content="DMPA self-inject">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_ZA">
+  <meta property="og:url" content="https://dmpa-selfinject.example/">
   <meta property="og:title" content="DMPA self-inject · Contraception Made Simple">
   <meta property="og:description" content="Learn how to self-inject DMPA-SC, work out your next injection date and find answers to common questions.">
-  <meta property="og:image" content="assets/images/logo-full-purple.png">
-  <meta property="og:type" content="website">
-  <link rel="icon" type="image/png" href="assets/images/logo-purple.png">
+  <meta property="og:image" content="https://dmpa-selfinject.example/assets/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="DMPA self-inject: Contraception that fits your life. A smiling woman holds a DMPA-SC injector.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Satisfy&display=swap">
   <link rel="stylesheet" href="css/styles.css">
+  <script type="importmap">
+  { "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  } }
+  </script>
   <script src="js/config.js" defer></script>
   <script src="js/data/sample-resources.js" defer></script>
   <script src="js/services/resources-service.js" defer></script>
@@ -68,24 +86,12 @@
         <a class="btn btn--lg btn--outline-light" href="#reminders">Work out my next date</a>
       </div>
     </div>
-    <div class="hero-art" aria-hidden="true">
+    <div class="hero-art">
       <div class="hero-art__frame">
-        <svg viewBox="0 0 380 300" fill="none">
-          <circle cx="190" cy="150" r="120" fill="#AA90FD" opacity=".45"/>
-          <path d="M318 52l6 14 14 6-14 6-6 14-6-14-14-6 14-6z" fill="#FFE06B"/>
-          <path d="M60 210l4 9 9 4-9 4-4 9-4-9-9-4 9-4z" fill="#FFE06B"/>
-          <circle cx="76" cy="70" r="7" fill="#80F2A6"/>
-          <g transform="translate(118 150) rotate(-22)" stroke="#1A1238" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
-            <ellipse cx="0" cy="0" rx="58" ry="40" fill="#fff"/>
-            <ellipse cx="0" cy="6" rx="38" ry="22" fill="#E7DBFF" stroke="none"/>
-            <rect x="54" y="-18" width="70" height="36" rx="9" fill="#F9C70E"/>
-            <line x1="124" y1="0" x2="190" y2="0"/>
-            <rect x="134" y="-15" width="100" height="30" rx="15" fill="#FF017E"/>
-          </g>
-        </svg>
+        <img class="hero-art__photo" src="assets/images/hero-woman.webp" alt="A smiling young woman in a black jacket holds up a DMPA-SC self-injection device" width="808" height="1200" fetchpriority="high">
       </div>
-      <div class="hero-art__sticker">Your body.<br>Your choice.<br>Your time.</div>
-      <div class="hero-art__badge"><b>99%</b><span>effective</span></div>
+      <div class="hero-art__sticker" aria-hidden="true">Your body.<br>Your choice.<br>Your time.</div>
+      <div class="hero-art__badge" aria-hidden="true"><b>99%</b><span>effective</span></div>
     </div>
   </div>
 </section>
@@ -395,7 +401,7 @@
     <div class="site-footer__bottom site-footer__bottom--rule">
       <img class="site-footer__logo" src="assets/images/logo-full-white.png" alt="DMPA self-inject: Contraception Made Simple" width="146" height="72">
       <div class="stack stack--sm">
-        <nav class="site-footer__links" aria-label="Footer"><a href="index.html">Home</a><a href="faqs.html">FAQs</a><a href="resources.html">Resources</a></nav>
+        <nav class="site-footer__links" aria-label="Footer"><a href="index.html">Home</a><a href="faqs.html">FAQs</a><a href="resources.html">Resources</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
         <p class="site-footer__legal">This hub supports, but does not replace, advice from your nurse or health worker. DMPA-SC does not protect against HIV or STIs. © <span data-year>2026</span></p>
       </div>
     </div>

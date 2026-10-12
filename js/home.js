@@ -33,6 +33,22 @@
   });
   selectStep(0);
 
+  // 3D renders replace the step illustrations once the section is near the
+  // viewport. If WebGL or the CDN isn't available the SVGs simply stay.
+  const maps = $('#maps');
+  if (maps && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      if (!entries.some(e => e.isIntersecting)) return;
+      io.disconnect();
+      const arts = $$('.step-art', maps);
+      arts.forEach(a => a.classList.add('step-art--loading'));
+      import('./maps-3d.js')
+        .catch(err => console.warn('MAPS 3D unavailable:', err))
+        .finally(() => arts.forEach(a => a.classList.remove('step-art--loading')));
+    }, { rootMargin: '300px' });
+    io.observe(maps);
+  }
+
   /* ---- Next-date calculator -------------------------------------------- */
   // Due date is 3 calendar months after the last injection. The window runs
   // from 2 weeks before to 4 weeks after the due date (NDOH SOP, Sept 2026).
@@ -134,7 +150,7 @@
   const card = r => {
     const kicker = [r.type, r.details].filter(Boolean).join(' · ');
     const cover = r.thumbUrl
-      ? `<img class="resource__thumb" src="${esc(r.thumbUrl)}" alt="" loading="lazy">`
+      ? `<img class="resource__thumb" src="${esc(r.thumbUrl)}" alt="Cover of ${esc(r.title)}" loading="lazy">`
       : `<div class="resource__cover"><span class="resource__cover-type">${esc(r.type)}</span><span class="resource__cover-title">${esc(r.title)}</span></div>`;
     const action = DMPA.resources.hasFile(r)
       ? `<a class="btn btn--outline self-start" href="${esc(r.fileUrl)}" target="_blank" rel="noopener" download>Download ${esc(r.format || '')}</a>`
@@ -143,7 +159,10 @@
       <div class="resource__body"><span class="eyebrow" style="color:var(--tone-ink)">${esc(kicker)}</span>
       <h3 class="resource__title">${esc(r.title)}</h3><p class="resource__desc">${esc(r.description)}</p></div>${action}</article>`;
   };
+  list.setAttribute('aria-busy', 'true');
+  list.innerHTML = DMPA.util.skeleton(3);
   DMPA.resources.load()
+    .finally(() => list.setAttribute('aria-busy', 'false'))
     .then(({ items }) => { list.innerHTML = items.filter(r => r.audience === 'For women').slice(0, 3).map(card).join(''); })
     .catch(err => {
       console.error('Downloads failed to load', err);
