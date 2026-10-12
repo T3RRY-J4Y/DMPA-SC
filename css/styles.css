@@ -184,6 +184,8 @@ ul[class], ol[class] { list-style: none; margin: 0; padding: 0; }
 .calculator__actions-title, .calculator__hint { grid-column: 1 / -1; }
 .calculator__actions-title { font-weight: 700; font-size: 16px; color: var(--ink); }
 .calculator__hint { font-size: 14px; line-height: 1.45; color: var(--ink-2); }
+.btn__stack { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.btn__stack small { font-size: 13px; font-weight: 600; opacity: .75; }
 .calculator__actions .btn[aria-disabled="true"] { opacity: .5; pointer-events: none; }
 .btn--primary { background: var(--purple); color: #fff; }
 .btn--primary:hover { background: var(--indigo); color: #fff; }
