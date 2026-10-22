@@ -42,7 +42,12 @@
       io.disconnect();
       const arts = $$('.step-art', maps);
       arts.forEach(a => a.classList.add('step-art--loading'));
-      import('./maps-3d.js')
+      // Safari before 16.4 has no import maps; the deferred es-module-shims
+      // script (loaded before this one) provides importShim for that case.
+      const nativeMaps = HTMLScriptElement.supports && HTMLScriptElement.supports('importmap');
+      (nativeMaps || !window.importShim
+        ? import('./maps-3d.js')
+        : importShim(new URL('js/maps-3d.js', document.baseURI).href))
         .catch(err => console.warn('MAPS 3D unavailable:', err))
         .finally(() => arts.forEach(a => a.classList.remove('step-art--loading')));
     }, { rootMargin: '300px' });

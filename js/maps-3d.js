@@ -437,8 +437,9 @@ function applyState(s, shake) {
 }
 
 // ---------- Page wiring ----------
-let step = 1, stepT = 0, camGoal = null, visible = false;
-const settle = () => { if (reduceMotion && step > 0) stepT = STEPS[step].dur; };
+// With reduced motion the steps don't loop on their own; Replay plays one pass.
+let step = 1, stepT = 0, camGoal = null, visible = false, playing = !reduceMotion;
+const settle = () => { if (reduceMotion && step > 0) { stepT = STEPS[step].dur; playing = false; } };
 
 function goTo(i) {
   step = i + 1; stepT = 0;
@@ -456,7 +457,7 @@ function goTo(i) {
 const current = () => Math.max(0, tabs.findIndex(t => t.getAttribute('aria-selected') === 'true'));
 new MutationObserver(() => { if (current() !== step - 1) goTo(current()); })
   .observe(document.querySelector('.step-tabs'), { subtree: true, attributes: true, attributeFilter: ['aria-selected'] });
-replayBtn.addEventListener('click', () => { stepT = 0; camGoal = DEMO_POS.clone(); settle(); });
+replayBtn.addEventListener('click', () => { stepT = 0; camGoal = DEMO_POS.clone(); playing = true; });
 controls.addEventListener('start', () => { camGoal = null; });
 
 function resize() {
@@ -479,14 +480,15 @@ const clock = new THREE.Clock();
 renderer.setAnimationLoop(() => {
   const dt = Math.min(clock.getDelta(), 0.05);
   if (!visible) return;
-  if (!reduceMotion) {
+  if (playing) {
     stepT += dt;
-    if (stepT > STEPS[step].dur + LOOP_PAUSE) stepT = 0;
+    if (reduceMotion && stepT >= STEPS[step].dur) { stepT = STEPS[step].dur; playing = false; }
+    else if (stepT > STEPS[step].dur + LOOP_PAUSE) stepT = 0;
   }
   const tgt = targetState(step, stepT);
   const follow = 1 - Math.exp(-11 * dt);   // ≈0.18 per frame at 60fps, same feel at any frame rate
   for (const k in cur) cur[k] += (tgt[k] - cur[k]) * follow;
-  const shake = step === 1 && !reduceMotion ? (stepT < 3.2 ? 1 : Math.max(0, 1 - (stepT - 3.2) / 0.4)) : 0;
+  const shake = step === 1 && playing ? (stepT < 3.2 ? 1 : Math.max(0, 1 - (stepT - 3.2) / 0.4)) : 0;
   applyState(cur, shake);
 
   if (camGoal) {

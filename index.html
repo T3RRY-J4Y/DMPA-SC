@@ -26,18 +26,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Satisfy&display=swap">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=20261022c">
+  <!-- Import map support for Safari before 16.4; a no-op in browsers that have it -->
+  <script defer src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js" crossorigin="anonymous"></script>
   <script type="importmap">
   { "imports": {
     "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
     "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
   } }
   </script>
-  <script src="js/config.js" defer></script>
-  <script src="js/data/sample-resources.js" defer></script>
-  <script src="js/services/resources-service.js" defer></script>
-  <script src="js/site.js" defer></script>
-  <script src="js/home.js" defer></script>
+  <script src="js/config.js?v=20261022c" defer></script>
+  <script src="js/data/sample-resources.js?v=20261022c" defer></script>
+  <script src="js/services/resources-service.js?v=20261022c" defer></script>
+  <script src="js/site.js?v=20261022c" defer></script>
+  <script src="js/home.js?v=20261022c" defer></script>
+  <script src="js/method-quiz.js?v=20261022c" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -78,7 +81,6 @@
   <span class="blob" style="width:180px;height:180px;background:var(--yellow);left:-60px;bottom:-70px"></span>
   <div class="container hero split split--center">
     <div class="stack">
-      <span class="badge">Your self-injection resource hub</span>
       <h1 class="display">Contraception that <span class="script script--accent">fits</span> your life</h1>
       <p class="lead">DMPA-SC is an injectable contraceptive you can give yourself at home once you've been trained. One injection every 3 months, conveniently and privately.</p>
       <div class="row">
@@ -334,6 +336,9 @@
     <h2 class="h2" id="compare-title">Choose what <span class="script" style="color:var(--purple)">works</span> for you</h2>
     <p class="lead text-muted">Different methods work for different people. You can get contraceptives for free at your local public clinic or hospital. This is your right.</p>
   </div>
+  <dialog class="quiz" id="method-quiz" aria-labelledby="quiz-heading">
+    <div class="quiz__panel" data-quiz-panel></div>
+  </dialog>
   <div class="chip-group" role="group" aria-label="Filter methods">
     <button class="chip" type="button" data-filter="All" aria-pressed="true">All</button>
     <button class="chip" type="button" data-filter="Injectable" aria-pressed="false">Injectable</button>
@@ -341,16 +346,20 @@
     <button class="chip" type="button" data-filter="Short-acting" aria-pressed="false">Short-acting</button>
   </div>
   <div class="grid grid--fill" style="--grid-min:280px" id="methods">
-    <article class="method method--featured" data-cat="Injectable"><div class="method__head"><h3 class="method__name">DMPA-SC self-injection</h3><span class="method__eff">99%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>3 months</dd><dt>Clinic</dt><dd>Every 6 months</dd></dl><p class="method__note">Small, light, short needle just under the skin. A take-home option that reduces clinic visits without a long-term commitment.</p></article>
-    <article class="method" data-cat="Injectable"><div class="method__head"><h3 class="method__name">DMPA-SC by a provider</h3><span class="method__eff">99%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>3 months</dd><dt>Clinic</dt><dd>Every 3 months</dd></dl><p class="method__note">The same small injection under the skin, given by a health provider at the clinic.</p></article>
-    <article class="method" data-cat="Injectable"><div class="method__head"><h3 class="method__name">Other injections (intramuscular)</h3><span class="method__eff">97%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>2 or 3 months</dd><dt>Clinic</dt><dd>Every 2 or 3 months</dd></dl><p class="method__note">Injected into the muscle. May cause irregular periods, weight gain from increased appetite and mild headaches.</p></article>
-    <article class="method" data-cat="Long-acting"><div class="method__head"><h3 class="method__name">Implant</h3><span class="method__eff">99%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>3 years</dd><dt>Clinic</dt><dd>Every 3 years</dd></dl><p class="method__note">Can cause irregular, lighter or heavier bleeding and mild headaches, but works for a full 3 years.</p></article>
-    <article class="method" data-cat="Long-acting"><div class="method__head"><h3 class="method__name">Hormonal IUD (loop)</h3><span class="method__eff">99%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>5 years</dd><dt>Clinic</dt><dd>Every 5 years</dd></dl><p class="method__note">Long-acting prevention. May cause irregular periods, or your period may stop.</p></article>
-    <article class="method" data-cat="Long-acting"><div class="method__head"><h3 class="method__name">Copper IUD (loop)</h3><span class="method__eff">99%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>5–10 years</dd><dt>Clinic</dt><dd>Every 5–10 years</dd></dl><p class="method__note">Non-hormonal. May cause heavier or longer periods, cramping and spotting.</p></article>
-    <article class="method" data-cat="Short-acting"><div class="method__head"><h3 class="method__name">Oral pills</h3><span class="method__eff">97%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>Daily</dd><dt>Clinic</dt><dd>Every 6 months</dd></dl><p class="method__note">Taken every day at the same time, no skipping!</p></article>
-    <article class="method" data-cat="Short-acting"><div class="method__head"><h3 class="method__name">Condoms</h3><span class="method__eff">85%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>Once-off</dd><dt>Clinic</dt><dd>When needed</dd></dl><p class="method__note">Must be used every time. The only method that also protects against HIV and STIs.</p></article>
-    <article class="method" data-cat="Short-acting"><div class="method__head"><h3 class="method__name">Emergency pill</h3><span class="method__eff">80–95%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>Once-off</dd><dt>Clinic</dt><dd>When needed</dd></dl><p class="method__note">Use within 5 days of unprotected sex, the sooner the better.</p></article>
-    <article class="method" data-cat="Long-acting"><div class="method__head"><h3 class="method__name">Sterilisation / vasectomy</h3><span class="method__eff">90–95%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>Forever</dd><dt>Clinic</dt><dd>Only for check-ups</dd></dl><p class="method__note">Permanent, so you need to be sure. Does not affect sexual performance.</p></article>
+    <article class="method method--featured" data-cat="Injectable" data-method="sc"><div class="method__head"><h3 class="method__name">DMPA-SC self-injection</h3><span class="method__eff">99%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>3 months</dd><dt>Clinic</dt><dd>Every 6 months</dd></dl><p class="method__note">Small, light, short needle just under the skin. A take-home option that reduces clinic visits without a long-term commitment.</p></article>
+    <article class="method" data-cat="Injectable" data-method="scp"><div class="method__head"><h3 class="method__name">DMPA-SC by a provider</h3><span class="method__eff">99%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>3 months</dd><dt>Clinic</dt><dd>Every 3 months</dd></dl><p class="method__note">The same small injection under the skin, given by a health provider at the clinic.</p></article>
+    <article class="method" data-cat="Injectable" data-method="im"><div class="method__head"><h3 class="method__name">Other injections (intramuscular)</h3><span class="method__eff">97%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>2 or 3 months</dd><dt>Clinic</dt><dd>Every 2 or 3 months</dd></dl><p class="method__note">Injected into the muscle. May cause irregular periods, weight gain from increased appetite and mild headaches.</p></article>
+    <article class="method" data-cat="Long-acting" data-method="implant"><div class="method__head"><h3 class="method__name">Implant</h3><span class="method__eff">99%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>3 years</dd><dt>Clinic</dt><dd>Every 3 years</dd></dl><p class="method__note">Can cause irregular, lighter or heavier bleeding and mild headaches, but works for a full 3 years.</p></article>
+    <article class="method" data-cat="Long-acting" data-method="hiud"><div class="method__head"><h3 class="method__name">Hormonal IUD (loop)</h3><span class="method__eff">99%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>5 years</dd><dt>Clinic</dt><dd>Every 5 years</dd></dl><p class="method__note">Long-acting prevention. May cause irregular periods, or your period may stop.</p></article>
+    <article class="method" data-cat="Long-acting" data-method="cuiud"><div class="method__head"><h3 class="method__name">Copper IUD (loop)</h3><span class="method__eff">99%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>5–10 years</dd><dt>Clinic</dt><dd>Every 5–10 years</dd></dl><p class="method__note">Non-hormonal. May cause heavier or longer periods, cramping and spotting.</p></article>
+    <article class="method" data-cat="Short-acting" data-method="pill"><div class="method__head"><h3 class="method__name">Oral pills</h3><span class="method__eff">97%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>Daily</dd><dt>Clinic</dt><dd>Every 6 months</dd></dl><p class="method__note">Taken every day at the same time, no skipping!</p></article>
+    <article class="method" data-cat="Short-acting" data-method="condom"><div class="method__head"><h3 class="method__name">Condoms</h3><span class="method__eff">85%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>Once-off</dd><dt>Clinic</dt><dd>When needed</dd></dl><p class="method__note">Must be used every time. The only method that also protects against HIV and STIs.</p></article>
+    <article class="method" data-cat="Short-acting" data-method="ec"><div class="method__head"><h3 class="method__name">Emergency pill</h3><span class="method__eff">80–95%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>Once-off</dd><dt>Clinic</dt><dd>When needed</dd></dl><p class="method__note">Use within 5 days of unprotected sex, the sooner the better.</p></article>
+    <article class="method" data-cat="Long-acting" data-method="steril"><div class="method__head"><h3 class="method__name">Sterilisation / vasectomy</h3><span class="method__eff">90–95%</span></div><dl class="method__facts"><dt>Lasts</dt><dd>Forever</dd><dt>Clinic</dt><dd>Only for check-ups</dd></dl><p class="method__note">Permanent, so you need to be sure. Does not affect sexual performance.</p></article>
+  </div>
+  <div class="quiz-cta" hidden>
+    <button class="btn btn--primary btn--lg" type="button" data-quiz-open>Take the quiz</button>
+    <span class="text-muted">Answer up to 7 quick questions to see which methods might suit you best.</span>
   </div>
 </section>
 
