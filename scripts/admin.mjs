@@ -1,5 +1,5 @@
 /* Manages who can use the admin panel, by setting the `admin` custom claim.
-   The person must have signed in to admin.html once first.
+   The person must have signed in at /admin once first.
 
    GOOGLE_APPLICATION_CREDENTIALS=service-account.json npm run admin -- add someone@example.com
    … npm run admin -- remove someone@example.com
@@ -16,9 +16,11 @@ const [command, email] = process.argv.slice(2);
 async function setAdmin(on) {
   if (!email) throw new Error(`Usage: npm run admin -- ${command} <email>`);
   const user = await auth.getUserByEmail(email).catch(() => {
-    throw new Error(`${email} has not signed in yet. Ask them to open admin.html and sign in, then run this again.`);
+    throw new Error(`${email} has not signed in yet. Ask them to open /admin and sign in, then run this again.`);
   });
   await auth.setCustomUserClaims(user.uid, { ...user.customClaims, admin: on || undefined });
+  // Removing access also ends any open admin session (sessions are checked for revocation)
+  if (!on) await auth.revokeRefreshTokens(user.uid);
   console.log(`${email} is ${on ? 'now an admin' : 'no longer an admin'}. They should click "Check again" or sign in again.`);
 }
 

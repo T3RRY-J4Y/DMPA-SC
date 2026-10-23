@@ -15,7 +15,7 @@ npx firebase login          # opens a browser to sign in with your Google accoun
 
 | Command | What it does |
 | --- | --- |
-| `npm run emulators` | Runs Firestore, Storage and Auth locally (needs Java), with a UI at http://localhost:4000. Open `admin.html?emulator` to use the admin panel against them. |
+| `npm run emulators` | Runs Firestore, Storage and Auth locally (needs Java), with a UI at http://localhost:4000. Use `npm run serve` and open `/admin?emulator` to use the admin panel against them. |
 | `npm run seed:emulator` | Seeds the local emulator with the sample resources |
 | `npm run seed` | Seeds the live project (needs a service account key, see step 4) |
 | `npm run build` | Copies the public site into `dist/`, the only folder Hosting publishes (an allowlist, so keys and tooling can't be published) |
@@ -98,13 +98,23 @@ They have been checked against the emulators. Events with an unknown type, extra
 
 ## 6. The admin panel
 
-`admin.html` is where resources are managed and usage is reviewed. It isn't linked from the site, and it is hidden from search engines.
+`/admin` is where resources are managed and usage is reviewed. It isn't linked from the site, and it is hidden from search engines.
+
+**How it's protected.** The admin area isn't part of the public files. The `adminPanel` function (`functions/admin.js`) serves `/admin` and everything under it:
+- **Without an admin session:** `/admin` shows only the sign-in page (`functions/admin/login.html`), and the panel's scripts and styles under `/admin/app/` return 401.
+- **Signing in:** after Google sign-in, the browser swaps its Firebase ID token for a session cookie at `POST /admin/session`. That only works for accounts with the `admin` claim, and only from this site's own pages.
+- **The cookie:** HttpOnly, SameSite=Strict, Secure, and limited to `/admin`. It lasts 12 hours.
+- **Every request** checks the cookie with Firebase Auth, including whether it has been revoked. So `npm run admin -- remove` ends that person's session straight away.
+- **Caching:** admin responses are never cached (`Cache-Control: private, no-store`), can't be framed, and aren't indexed.
+- **The data** has its own protection: the security rules (section 5) check the admin claim on every read and write, so even someone holding the panel's code can't use it.
+
+The admin area runs only on Firebase Hosting with the functions (`npm run serve` locally, or the deployed site), not on a plain static server.
 
 **One-time setup**
 
 1. In the Firebase console, go to **Authentication → Sign-in method**, and enable **Google**.
 2. Under **Authentication → Settings → Authorised domains**, add every address the panel will be opened from. `localhost` and `dmpa-selfinject.firebaseapp.com` are there by default. Add the live domain and any Codespaces preview address, e.g. `xyz-5500.app.github.dev`.
-3. Ask the new admin to open `admin.html` and sign in with Google. They'll see “You don’t have access yet”.
+3. Ask the new admin to open `/admin` and sign in with Google. They'll see “You don’t have access yet”.
 4. Grant access, then they click **Check again**:
 
    ```sh

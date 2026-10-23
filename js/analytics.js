@@ -1,4 +1,4 @@
-/* Anonymous usage counts for the admin dashboard (admin.html).
+/* Anonymous usage counts for the admin dashboard (/admin).
    Each event is one small Firestore document: what happened, on which page,
    and where relevant which resource, question or quiz match. Nothing that
    identifies a person is sent: no cookies, IDs, IP-based location or quiz

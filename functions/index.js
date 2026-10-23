@@ -8,6 +8,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { getStorage, getDownloadURL } from 'firebase-admin/storage';
 import { onRequest } from 'firebase-functions/v2/https';
 import { setGlobalOptions } from 'firebase-functions/v2';
+import { handleAdmin } from './admin.js';
 
 initializeApp();
 setGlobalOptions({ region: 'africa-south1', maxInstances: 5 });
@@ -88,3 +89,6 @@ export const sharePage = onRequest({ memory: '256MiB', concurrency: 40 }, async 
   res.set('Cache-Control', r ? 'public, max-age=300, s-maxage=900' : 'public, max-age=60');
   res.status(r ? 200 : 404).type('html').send(page({ origin, shareUrl: `${origin}/r/${encodeURIComponent(id)}`, target, r }));
 });
+
+/* The admin area: see admin.js. */
+export const adminPanel = onRequest({ memory: '256MiB', concurrency: 40 }, handleAdmin);

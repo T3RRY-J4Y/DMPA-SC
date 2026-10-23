@@ -5,7 +5,7 @@ A resource hub for **DMPA-SC self-injectable contraception** (“Contraception M
 - **Home**: what DMPA-SC is, the MAPS self-injection method, what to expect afterwards, a next-injection date calculator with calendar export, a comparison of contraceptive methods, and downloads.
 - **FAQs**: 108 questions in 7 topics, with search, topic navigation and quick facts.
 - **Resources**: a downloadable library of guides, cards and brand files, filtered by audience, served from Firebase.
-- **Admin** (`admin.html`, not linked from the site): upload and manage resources, and see anonymous usage analytics. Setup is in [`docs/DATABASE.md`](docs/DATABASE.md#6-the-admin-panel).
+- **Admin** (`/admin`, not linked from the site, served only to signed-in admins): upload and manage resources, and see anonymous usage analytics. Setup is in [`docs/DATABASE.md`](docs/DATABASE.md#6-the-admin-panel).
 
 It is a static site: plain HTML, one stylesheet and vanilla JavaScript, with no build step or framework.
 
@@ -29,17 +29,14 @@ It's set up for **Firebase Hosting** (`npm run deploy`), which also provides the
 ├── resources.html           Resource library
 ├── privacy.html             Privacy policy (POPIA)
 ├── terms.html               Terms of use
-├── admin.html               Admin panel (Google sign-in, admins only)
 ├── 404.html                 Not-found page
 ├── robots.txt, sitemap.xml  Search engine files (domain placeholder, see below)
 ├── favicon.ico, site.webmanifest
 ├── css/
-│   ├── styles.css           The site stylesheet: brand tokens, components, page sections
-│   └── admin.css            Admin panel styles, built on the same tokens
+│   └── styles.css           The site stylesheet: brand tokens, components, page sections
 ├── js/
 │   ├── config.js            Site settings: WhatsApp number, Firebase config  ← edit to go live
 │   ├── analytics.js         Anonymous usage counts for the admin dashboard
-│   ├── admin/               Admin panel modules: sign-in, analytics dashboard, resource manager
 │   ├── site.js              Shared behaviour: mobile menu, back-to-top, helpers
 │   ├── home.js              MAPS tabs, date calculator, method filter, downloads
 │   ├── faqs.js              FAQ rendering, search, expand/collapse
@@ -54,7 +51,9 @@ It's set up for **Firebase Hosting** (`npm run deploy`), which also provides the
 │   └── icons/               Favicons and app icons
 ├── docs/
 │   └── DATABASE.md          Firebase setup, schema and security rules
-├── firebase.json, .firebaserc       Firebase CLI config (project ID, rules, emulators)
+├── firebase.json, .firebaserc       Firebase CLI config (hosting, functions, rules, emulators)
+├── functions/               Cloud Functions: /r/<id> share pages (index.js) and the admin gate (admin.js)
+│   └── admin/               The admin panel: sign-in page (public) and app/ (served to admins only)
 ├── firestore.rules, storage.rules   Security rules, deployed with `npm run deploy:rules`
 ├── scripts/
 │   ├── seed-resources.mjs   Copies the sample resources into Firestore

@@ -1,67 +1,49 @@
-/* Admin panel shell: sign-in, the admin check, and switching between the
-   Analytics and Resources views (#analytics, #resources). */
+/* Admin panel shell: switching between the Analytics and Resources views
+   (#analytics, #resources), and signing out. This file is only served with
+   an admin session (functions/admin.js); signing in happens on the sign-in
+   page. The browser's Firebase sign-in is still needed, because the
+   security rules check it on every read and write. */
 import { A, auth, usingEmulator } from './firebase.js';
 import { $, $$, toast } from './ui.js';
 import * as dashboard from './dashboard.js';
 import * as library from './library.js';
 
+// Reaching the panel means the session cookie worked (see the loop check in login.js)
+try { sessionStorage.removeItem('dmpa-admin-session-at'); } catch { /* fine */ }
+
 const views = Object.fromEntries($$('[data-view]').map(v => [v.dataset.view, v]));
 const tabs = $$('[data-tab]');
-const userBox = $('[data-user]');
 const modules = { analytics: dashboard, resources: library };
 
 function show(name) {
   $('.admin-loading').hidden = true;
   Object.entries(views).forEach(([key, el]) => { el.hidden = key !== name; });
-  const signedIn = name in modules;
-  $('.admin-nav').hidden = !signedIn;
+  $('.admin-nav').hidden = false;
   tabs.forEach(t => t.setAttribute('aria-current', String(t.dataset.tab === name)));
-  if (signedIn) modules[name].open();
+  modules[name].open();
 }
 
 const route = () => show(location.hash.slice(1) in modules ? location.hash.slice(1) : 'analytics');
-let isAdmin = false;
-addEventListener('hashchange', () => { if (isAdmin) route(); });
+let started = false;
+addEventListener('hashchange', () => { if (started) route(); });
 
-async function check(user, refresh = false) {
-  if (!user) {
-    isAdmin = false;
-    userBox.hidden = true;
-    return show('signin');
-  }
-  userBox.hidden = false;
-  $('[data-user-email]').textContent = user.email;
-  const token = await user.getIdTokenResult(refresh);
-  isAdmin = token.claims.admin === true;
-  if (!isAdmin) {
-    $('[data-denied-email]').textContent = user.email;
-    $('[data-denied-command]').textContent = `npm run admin -- add ${user.email}`;
-    return show('denied');
-  }
-  route();
+/* Ends the server session too, then goes back to the sign-in page. */
+async function signOut() {
+  await fetch('/admin/logout', { method: 'POST' }).catch(() => {});
+  await A.signOut(auth).catch(() => {});
+  location.replace(`/admin${location.search}`);
 }
 
-A.onAuthStateChanged(auth, user => check(user, true).catch(err => toast(err.message, 'error')));
+A.onAuthStateChanged(auth, async user => {
+  // A session cookie without a browser sign-in (e.g. site data cleared): start over
+  if (!user) return signOut();
+  const token = await user.getIdTokenResult(true).catch(() => null);
+  if (token?.claims.admin !== true) return signOut();
+  $('[data-user]').hidden = false;
+  $('[data-user-email]').textContent = user.email;
+  started = true;
+  route();
+}, err => toast(err.message, 'error'));
 
-const SIGN_IN_ERRORS = {
-  'auth/unauthorized-domain': `This address (${location.hostname}) isn’t allowed to sign in yet. Add it in Firebase console → Authentication → Settings → Authorised domains.`,
-  'auth/operation-not-allowed': 'Google sign-in is switched off. Turn it on in Firebase console → Authentication → Sign-in method.',
-  'auth/popup-closed-by-user': '',
-  'auth/cancelled-popup-request': '',
-};
-
-$('[data-sign-in]').addEventListener('click', async () => {
-  const provider = new A.GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: 'select_account' });
-  try {
-    await A.signInWithPopup(auth, provider);
-  } catch (err) {
-    if (err.code === 'auth/popup-blocked') return A.signInWithRedirect(auth, provider);
-    const msg = SIGN_IN_ERRORS[err.code] ?? err.message;
-    if (msg) toast(msg, 'error');
-  }
-});
-$$('[data-sign-out]').forEach(b => b.addEventListener('click', () => A.signOut(auth)));
-$('[data-check-again]').addEventListener('click', () => check(auth.currentUser, true));
-
+$$('[data-sign-out]').forEach(b => b.addEventListener('click', signOut));
 if (usingEmulator) $('[data-emulator-note]').hidden = false;

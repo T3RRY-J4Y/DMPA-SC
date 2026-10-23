@@ -6,20 +6,20 @@
   <title>Admin · DMPA self-inject</title>
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#9300FF">
-  <link rel="icon" href="favicon.ico" sizes="48x48">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="css/styles.css?v=20261023g">
-  <link rel="stylesheet" href="css/admin.css?v=20261023g">
-  <script src="js/config.js?v=20261023g" defer></script>
-  <script src="js/admin/app.js?v=20261023g" type="module"></script>
+  <link rel="stylesheet" href="/css/styles.css?v=20261023g">
+  <link rel="stylesheet" href="/admin/app/admin.css?v=20261023g">
+  <script src="/js/config.js?v=20261023g" defer></script>
+  <script src="/admin/app/app.js?v=20261023g" type="module"></script>
 </head>
 <body class="admin">
 
 <header class="admin-bar">
-  <a class="admin-bar__logo" href="index.html" aria-label="Back to the DMPA self-inject site"><img src="assets/images/logo-purple.png" alt="DMPA self-inject" width="110" height="44"></a>
+  <a class="admin-bar__logo" href="/" aria-label="Back to the DMPA self-inject site"><img src="/assets/images/logo-purple.png" alt="DMPA self-inject" width="110" height="44"></a>
   <span class="admin-bar__badge">Admin</span>
   <nav class="admin-nav" aria-label="Admin" hidden>
     <a href="#analytics" data-tab="analytics">Analytics</a>
@@ -36,32 +36,8 @@
 
 <main class="admin-main" id="main">
 
-  <!-- Loading, before the auth state is known -->
+  <!-- Served only to signed-in admins (functions/admin.js) -->
   <div class="admin-loading" aria-live="polite"><span class="admin-spinner" aria-hidden="true"></span> Loading…</div>
-
-  <!-- Signed out -->
-  <section class="admin-gate" data-view="signin" hidden>
-    <div class="card admin-gate__card">
-      <h1>Sign in to the admin panel</h1>
-      <p>Manage the resource library and see how the site is used. Use the Google account you were given admin access with.</p>
-      <button class="btn btn--lg btn--primary btn--block" type="button" data-sign-in>Sign in with Google</button>
-      <p class="admin-gate__small"><a href="index.html">Back to the site</a></p>
-    </div>
-  </section>
-
-  <!-- Signed in, but not an admin -->
-  <section class="admin-gate" data-view="denied" hidden>
-    <div class="card admin-gate__card">
-      <h1>You don’t have access yet</h1>
-      <p>You’re signed in as <strong data-denied-email></strong>, but this account isn’t an admin. Ask the site developer to run:</p>
-      <pre class="admin-code"><code data-denied-command></code></pre>
-      <p>Then come back and check again.</p>
-      <div class="admin-gate__actions">
-        <button class="btn btn--primary" type="button" data-check-again>Check again</button>
-        <button class="btn btn--outline" type="button" data-sign-out>Use another account</button>
-      </div>
-    </div>
-  </section>
 
   <!-- Analytics -->
   <section class="admin-view" data-view="analytics" hidden aria-labelledby="analytics-h">
@@ -152,7 +128,7 @@
         <p class="admin-head__sub" data-library-count>Loading…</p>
       </div>
       <div class="admin-head__actions">
-        <a class="btn btn--sm btn--outline" href="resources.html" target="_blank" rel="noopener">View on site</a>
+        <a class="btn btn--sm btn--outline" href="/resources.html" target="_blank" rel="noopener">View on site</a>
         <button class="btn btn--sm btn--primary" type="button" data-add>Add resource</button>
       </div>
     </div>

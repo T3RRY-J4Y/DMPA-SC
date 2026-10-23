@@ -4,6 +4,6 @@ Disallow: /design-source/
 Disallow: /archive/
 Disallow: /uploads/
 Disallow: /docs/
-Disallow: /admin.html
+Disallow: /admin
 
 Sitemap: https://dmpa-selfinject.example/sitemap.xml
