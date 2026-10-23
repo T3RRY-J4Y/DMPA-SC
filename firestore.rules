@@ -1,0 +1,13 @@
+rules_version = '2';
+
+// The public can read published resources only. All writes go through the
+// Firebase console or the Admin SDK (scripts/seed-resources.mjs), which
+// bypass these rules.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /resources/{id} {
+      allow read: if resource.data.published == true;
+      allow write: if false;
+    }
+  }
+}

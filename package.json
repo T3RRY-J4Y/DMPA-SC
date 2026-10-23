@@ -1,0 +1,16 @@
+{
+  "name": "dmpa-sc",
+  "private": true,
+  "description": "Tooling for the DMPA-SC site. The site itself is static and needs no build.",
+  "type": "module",
+  "scripts": {
+    "emulators": "firebase emulators:start --only firestore,storage",
+    "seed": "node scripts/seed-resources.mjs",
+    "seed:emulator": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node scripts/seed-resources.mjs",
+    "deploy:rules": "firebase deploy --only firestore,storage"
+  },
+  "devDependencies": {
+    "firebase-admin": "^13.0.0",
+    "firebase-tools": "^14.0.0"
+  }
+}

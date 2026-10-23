@@ -12,3 +12,7 @@ node_modules/
 # InDesign lock and backup files
 ~*.idlk
 *.indb~
+
+# Firebase service account keys (never commit)
+service-account*.json
+*-firebase-adminsdk-*.json

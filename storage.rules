@@ -1,0 +1,11 @@
+rules_version = '2';
+
+// Resource files and thumbnails are public. Uploads go through the console.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{folder}/{file} {
+      allow read: if folder in ['resources', 'thumbs'];
+      allow write: if false;
+    }
+  }
+}

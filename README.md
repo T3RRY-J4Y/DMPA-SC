@@ -49,6 +49,11 @@ The site can be hosted on any static host (GitHub Pages, Netlify, Firebase Hosti
 │   └── icons/               Favicons and app icons
 ├── docs/
 │   └── DATABASE.md          Firebase setup, schema and security rules
+├── firebase.json, .firebaserc       Firebase CLI config (project ID, rules, emulators)
+├── firestore.rules, storage.rules   Security rules, deployed with `npm run deploy:rules`
+├── scripts/
+│   └── seed-resources.mjs   Copies the sample resources into Firestore
+├── package.json             Firebase tooling only; the site itself has no build
 ├── design-source/           Brand and print source files (not served to users)
 │   ├── social/og-image.html Layout used to render assets/images/og-image.jpg (1200×630)
 │   ├── brand/               Logo PNGs and the colour palette
@@ -82,7 +87,7 @@ See [`docs/DATABASE.md`](docs/DATABASE.md). In short: create a Firebase project,
 
 - [ ] Replace the drawn MAPS and hero illustrations with final artwork or photography from the creative team.
 - [ ] Export the Pocketbook, one-pager and reminder card to PDF and upload them as resources.
-- [ ] Connect Firebase (see above).
+- [x] Connect Firebase (project `dmpa-selfinject`).
 - [ ] Clinical and content sign-off on all copy.
 
 ## Before going live
