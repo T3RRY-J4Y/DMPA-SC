@@ -8,7 +8,10 @@
     "seed": "node scripts/seed-resources.mjs",
     "seed:emulator": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 node scripts/seed-resources.mjs",
     "deploy:rules": "firebase deploy --only firestore,storage",
-    "admin": "node scripts/admin.mjs"
+    "admin": "node scripts/admin.mjs",
+    "build": "node scripts/build-site.mjs",
+    "serve": "node scripts/build-site.mjs && firebase emulators:start --only hosting,functions,firestore,storage,auth",
+    "deploy": "firebase deploy --only hosting,functions,firestore,storage"
   },
   "devDependencies": {
     "firebase-admin": "^13.0.0",

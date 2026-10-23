@@ -19,7 +19,7 @@ To share it or test it like a real website, serve the folder:
 npx serve .            # or: python3 -m http.server 8000
 ```
 
-The site can be hosted on any static host (GitHub Pages, Netlify, Firebase Hosting) without any setup. `404.html` is picked up automatically by those hosts.
+It's set up for **Firebase Hosting** (`npm run deploy`), which also provides the `/r/<id>` share pages. Only the files that `scripts/build-site.mjs` copies into `dist/` are published. Any other static host works too. Share links then fall back to `resources.html?resource=<id>` (see `shareHosts` in `js/config.js`). `404.html` is picked up automatically by those hosts.
 
 ## Project structure
 

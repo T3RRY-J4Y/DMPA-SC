@@ -18,6 +18,9 @@ npx firebase login          # opens a browser to sign in with your Google accoun
 | `npm run emulators` | Runs Firestore, Storage and Auth locally (needs Java), with a UI at http://localhost:4000. Open `admin.html?emulator` to use the admin panel against them. |
 | `npm run seed:emulator` | Seeds the local emulator with the sample resources |
 | `npm run seed` | Seeds the live project (needs a service account key, see step 4) |
+| `npm run build` | Copies the public site into `dist/`, the only folder Hosting publishes (an allowlist, so keys and tooling can't be published) |
+| `npm run serve` | Builds, then runs the whole site locally on the emulators at http://localhost:5000, including `/r/` share pages |
+| `npm run deploy` | Builds and deploys the site, the share-page function and the rules |
 | `npm run deploy:rules` | Publishes `firestore.rules`, `storage.rules` and `firestore.indexes.json` (which includes the events TTL policy) |
 | `npm run admin -- add <email>` | Gives someone access to the admin panel (also `remove <email>` and `list`). Needs the service account key. |
 
@@ -139,7 +142,13 @@ They have been checked against the emulators. Events with an unknown type, extra
 
 The dashboard loads the raw events for the chosen period and the one before it. That's one document read per event. At tens of thousands of events a month this is still cents. If traffic grows a lot, add a scheduled Cloud Function that rolls events up into daily totals.
 
-Every resource has its own address, `resources.html?resource=<id>`, which opens its preview. The ID is the Firestore document ID, and each row in the admin panel has a **Page link** to it. Downloads are counted only from the preview's Download button. Shares are counted when someone copies the link, uses the share menu or taps WhatsApp in the preview. A shared link works, but chat apps show the Resources page's general title and image as the link preview, not the resource's own. Per-resource link previews would need server-rendered pages, e.g. a Firebase Hosting rewrite to a Cloud Function.
+Every resource has its own address, `resources.html?resource=<id>`, which opens its preview. The ID is the Firestore document ID, and each row in the admin panel has a **Page link** to it. Downloads are counted only from the preview's Download button. Shares are counted when someone copies the link, uses the share menu or taps WhatsApp in the preview. When the site is on Firebase Hosting, shared links have the form `/r/<id>` instead. The `sharePage` function (`functions/index.js`, in `africa-south1`) answers those links.
+- It serves a small page with the resource's own title, description and cover as the WhatsApp and Facebook link preview.
+- With no cover, it uses the file itself if that's an image, else the site's share image.
+- Browsers are sent straight on to `resources.html?resource=<id>`. The visit is credited to the referring site, or to “shared link” when the app sends no referrer (WhatsApp usually doesn't).
+- Unpublished and unknown resources get a 404 with the general preview.
+- Pages are cached for 15 minutes, so a changed title or cover can take that long to show in new previews. Facebook keeps its own copy for longer; refresh it with its Sharing Debugger.
+- `/r/` links are used only on the hosts listed in `shareHosts` in `js/config.js`. Everywhere else, including a local preview server, links are `resources.html?resource=<id>`. Add the custom domain to `shareHosts` when the site moves to it.
 
 To tag a shared link, add `?utm_source=`, e.g. `index.html?utm_source=clinic-poster`. The tag then appears under “Where visits come from”.
 

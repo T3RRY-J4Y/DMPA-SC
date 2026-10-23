@@ -22,4 +22,12 @@ DMPA.config = {
   },
   firebaseSdkVersion: '10.12.2',
   resourcesCollection: 'resources',
+
+  /* Share links for resources. On the hosts listed here, links are /r/<id>,
+     which gives each resource its own WhatsApp and Facebook link preview
+     (Firebase Hosting plus the sharePage function, see docs/DATABASE.md).
+     Anywhere else they are resources.html?resource=<id>. Add the custom
+     domain here when the site moves to it. */
+  sharePath: '/r/',
+  shareHosts: ['dmpa-selfinject.web.app', 'dmpa-selfinject.firebaseapp.com', 'localhost:5000', '127.0.0.1:5000'],
 };

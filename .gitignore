@@ -16,3 +16,6 @@ node_modules/
 # Firebase service account keys (never commit)
 service-account*.json
 *-firebase-adminsdk-*.json
+
+# Built site for Firebase Hosting (npm run build)
+dist/

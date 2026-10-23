@@ -23,8 +23,12 @@ DMPA.resourcePreview = (() => {
     chat: '<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>',
   };
 
-  /* The address that opens this resource's preview, for sharing. */
+  /* The address to share for a resource: its share page when that's set
+     up (it carries the resource's own link preview), else this page. */
+  const cfg = DMPA.config || {};
+  const sharePath = cfg.shareHosts?.includes(location.host) ? cfg.sharePath : null;
   const shareUrl = id => {
+    if (sharePath) return new URL(sharePath + encodeURIComponent(id), location.origin).href;
     const u = new URL(location.pathname, location.origin);
     u.searchParams.set(PARAM, id);
     return u.href;

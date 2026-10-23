@@ -1,0 +1,12 @@
+{
+  "name": "dmpa-sc-functions",
+  "private": true,
+  "description": "Share pages for resources: /r/<id> carries the resource's own link preview, then opens it on resources.html.",
+  "type": "module",
+  "main": "index.js",
+  "engines": { "node": "22" },
+  "dependencies": {
+    "firebase-admin": "^13.0.0",
+    "firebase-functions": "^7.0.0"
+  }
+}

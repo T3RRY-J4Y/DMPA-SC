@@ -36,6 +36,9 @@ export function open() {
 
 const col = () => F.collection(db, RESOURCES);
 const url = path => (path ? S.getDownloadURL(S.ref(storage, path)).catch(() => '') : Promise.resolve(''));
+const { sharePath: path, shareHosts = [] } = window.DMPA.config;
+const sharePath = shareHosts.includes(location.host) ? path : null;
+const shareLink = id => (sharePath ? sharePath + encodeURIComponent(id) : `resources.html?resource=${encodeURIComponent(id)}`);
 const fileName = path => decodeURIComponent(String(path).split('/').pop().split('?')[0]);
 
 async function load() {
@@ -82,7 +85,7 @@ function render() {
       <div class="lib-item__body">
         <h3 class="lib-item__title">${esc(r.title)}</h3>
         <div class="lib-item__tags"><span class="tag">${esc(r.type || 'No type')}</span>${r.audience ? `<span class="tag tag--neutral">${esc(r.audience)}</span>` : ''}${[r.format, r.details].filter(Boolean).length ? `<span class="lib-item__meta">${esc([r.format, r.details].filter(Boolean).join(' · '))}</span>` : ''}</div>
-        <p class="lib-item__file">${file} · <a href="resources.html?resource=${encodeURIComponent(r.id)}" target="_blank" rel="noopener">Page link</a></p>
+        <p class="lib-item__file">${file} · <a href="${esc(shareLink(r.id))}" target="_blank" rel="noopener">Share link</a></p>
       </div>
       <label class="switch"><input type="checkbox" data-publish ${r.published ? 'checked' : ''}><span class="switch__track" aria-hidden="true"></span><span class="switch__label">${r.published ? 'Published' : 'Hidden'}</span></label>
       <div class="lib-item__actions">

@@ -43,9 +43,15 @@ DMPA.analytics = (() => {
     }).catch(() => { /* counts are best-effort */ });
   }
 
-  /* Where a visit came from: a ?utm_source= tag, else the referring site. */
+  /* Where a visit came from: a ?utm_source= tag, the ?from= that share
+     pages (/r/<id>) add, else the referring site. */
   function source() {
-    const utm = new URLSearchParams(location.search).get('utm_source');
+    const params = new URLSearchParams(location.search);
+    const utm = params.get('utm_source') || params.get('from');
+    if (params.has('from')) {
+      params.delete('from');
+      history.replaceState(history.state, '', `${location.pathname}${params.size ? `?${params}` : ''}${location.hash}`);
+    }
     if (utm) return utm.toLowerCase();
     try {
       const ref = new URL(document.referrer);
