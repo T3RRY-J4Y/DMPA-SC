@@ -1,13 +1,45 @@
 rules_version = '2';
 
-// The public can read published resources only. All writes go through the
-// Firebase console or the Admin SDK (scripts/seed-resources.mjs), which
-// bypass these rules.
+// Admins carry the `admin` custom claim, set with `npm run admin -- add <email>`.
+// The Admin SDK (seed and admin scripts) bypasses these rules.
 service cloud.firestore {
   match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    // The public sees published resources; admins see and edit all of them.
     match /resources/{id} {
-      allow read: if resource.data.published == true;
-      allow write: if false;
+      allow read: if resource.data.published == true || isAdmin();
+      allow write: if isAdmin() && validResource(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    function validResource(r) {
+      return r.title is string && r.title.size() > 0
+        && r.published is bool
+        && r.order is number;
+    }
+
+    // Anonymous usage events. Anyone can add one in the exact shape that
+    // js/analytics.js sends; only admins can read or delete them.
+    match /events/{id} {
+      allow create: if validEvent(request.resource.data);
+      allow read, delete: if isAdmin();
+    }
+
+    function validEvent(e) {
+      return e.keys().hasAll(['type', 'page', 'device', 'ts', 'expireAt'])
+        && e.keys().hasOnly(['type', 'page', 'item', 'device', 'first', 'ts', 'expireAt'])
+        && e.type in ['page_view', 'resource_view', 'resource_download', 'quiz_start',
+                      'quiz_complete', 'whatsapp_click', 'reminder_save', 'faq_open']
+        && e.page is string && e.page.size() <= 40
+        && e.device in ['mobile', 'desktop']
+        && (!('item' in e) || (e.item is string && e.item.size() <= 120))
+        && (!('first' in e) || e.first is bool)
+        // ts is set by the server (REQUEST_TIME transform), not the browser
+        && e.ts == request.time
+        && e.expireAt is timestamp && e.expireAt < request.time + duration.value(800, 'd');
     }
   }
 }

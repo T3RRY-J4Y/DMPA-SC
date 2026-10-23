@@ -15,7 +15,7 @@
     const action = DMPA.resources.hasFile(r)
       ? `<a class="btn btn--sm btn--dark" href="${esc(r.fileUrl)}" target="_blank" rel="noopener" download aria-label="Download ${esc(r.title)}">Download</a>`
       : '<span class="btn btn--sm btn--placeholder" aria-disabled="true">Coming soon</span>';
-    return `<article class="resource ${DMPA.resources.toneFor(r)}">${cover}
+    return `<article class="resource ${DMPA.resources.toneFor(r)}" data-resource="${esc(r.id)}">${cover}
       <div class="resource__body">
         <div class="resource__tags"><span class="tag">${esc(r.type)}</span>${r.audience ? `<span class="tag tag--neutral">${esc(r.audience)}</span>` : ''}</div>
         <h2 class="resource__title">${esc(r.title)}</h2>
@@ -33,6 +33,7 @@
     const items = all.filter(r => (state.filter === 'All' || r.audience === state.filter)
       && (!q || [r.title, r.description, r.type, r.audience].join(' ').toLowerCase().includes(q)));
     els.list.innerHTML = items.map(card).join('');
+    DMPA.analytics?.watchResources(els.list);
     els.list.setAttribute('aria-busy', 'false');
     els.count.textContent = items.length === 1 ? '1 resource' : `${items.length} resources`;
     els.empty.hidden = !(state.all && items.length === 0);

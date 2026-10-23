@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Privacy policy · DMPA self-inject</title>
-  <meta name="description" content="How the DMPA self-inject resource hub handles your information: no accounts, no tracking cookies, and your calculator dates never leave your device.">
+  <meta name="description" content="How the DMPA self-inject resource hub handles your information: no accounts, no tracking cookies, only anonymous usage counts, and your calculator dates and quiz answers never leave your device.">
   <meta name="theme-color" content="#9300FF">
   <link rel="canonical" href="https://dmpa-selfinject.example/privacy.html">
   <meta property="og:site_name" content="DMPA self-inject">
@@ -12,7 +12,7 @@
   <meta property="og:locale" content="en_ZA">
   <meta property="og:url" content="https://dmpa-selfinject.example/privacy.html">
   <meta property="og:title" content="Privacy policy · DMPA self-inject">
-  <meta property="og:description" content="How the DMPA self-inject resource hub handles your information: no accounts, no tracking cookies, and your calculator dates never leave your device.">
+  <meta property="og:description" content="How the DMPA self-inject resource hub handles your information: no accounts, no tracking cookies, only anonymous usage counts, and your calculator dates and quiz answers never leave your device.">
   <meta property="og:image" content="https://dmpa-selfinject.example/assets/images/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Satisfy&display=swap">
   <link rel="stylesheet" href="css/styles.css?v=20261023a">
   <script src="js/config.js?v=20261023a" defer></script>
+  <script src="js/analytics.js?v=20261023a" defer></script>
   <script src="js/site.js?v=20261023a" defer></script>
 </head>
 <body>
@@ -69,7 +70,7 @@
     <a class="back-link" href="index.html">← Back to home</a>
     <span class="script script--tag" style="color:var(--purple)">your information</span>
     <h1 class="display" style="font-size:clamp(38px,9vw,72px)">Privacy policy</h1>
-    <p class="lead">Last updated: 12 October 2026</p>
+    <p class="lead">Last updated: 23 October 2026</p>
   </div>
 </section>
 
@@ -82,19 +83,30 @@
       <li>You don’t need an account and there are no sign-up forms.</li>
       <li>The next-injection date calculator works entirely in your browser. The dates you enter are never sent to us.</li>
       <li>We don’t use advertising or tracking cookies, and we don’t sell or share your information.</li>
+      <li>We count how the site is used, such as which pages are opened and which guides are downloaded, without collecting anything that identifies you.</li>
     </ul>
 
     <h2>Information we collect</h2>
     <p><strong>Information you choose to send us.</strong> If you contact us on WhatsApp, we see your phone number, WhatsApp profile name and the messages you send. We use these only to answer your question and support you.</p>
     <p><strong>Technical information.</strong> Like most websites, our hosting provider automatically records basic technical details when pages are requested, such as your IP address, browser type and the time of the visit. These logs are used to keep the site secure and working, and are deleted on the provider’s normal schedule.</p>
-    <p><strong>Information stored on your device.</strong> The site saves one setting in your browser’s local storage: that you have seen the cookie notice, so it isn’t shown on every visit. It contains no personal information. You can remove it at any time by clearing your browser’s site data.</p>
+    <p><strong>Usage counts.</strong> To learn which information helps people most, the site records simple, anonymous counts of how it is used. Each count notes what happened, the page it happened on, the date and time, and whether you are on a phone or a computer. What happened is one of these:</p>
+    <ul>
+      <li>a page was opened, and the website or shared link that brought you here, if any</li>
+      <li>a resource was shown on screen or downloaded</li>
+      <li>an FAQ question was opened</li>
+      <li>the method quiz was started or finished, and which method came out as the top match. Your answers to the questions are never sent and stay on your device.</li>
+      <li>a next-injection reminder was saved to a calendar. The dates are never sent.</li>
+      <li>a WhatsApp button was tapped</li>
+    </ul>
+    <p>These counts contain no name, phone number, email address, IP address, cookie or device ID, so we can’t tell who you are or link one visit to another. They are kept for up to two years and then deleted automatically. If your browser sends a “Do Not Track” or “Global Privacy Control” signal, nothing is counted.</p>
+    <p><strong>Information stored on your device.</strong> The site saves one setting in your browser’s local storage: that you have seen the cookie notice, so it isn’t shown on every visit. While a browser tab is open, it also notes in session storage that this visit has already been counted, so that the visit is counted only once. This note is deleted when you close the tab. Neither contains personal information. You can remove it at any time by clearing your browser’s site data.</p>
 
     <h2>Services from other companies</h2>
     <p>Some parts of the site are delivered by other companies. When your browser loads them, they receive your IP address and browser details:</p>
     <ul>
       <li><strong>Google Fonts</strong> supplies the typefaces.</li>
       <li><strong>jsDelivr</strong> supplies the code for the 3D step-by-step demonstrations.</li>
-      <li><strong>Google Firebase</strong> supplies the resource library, from servers in Johannesburg, South Africa.</li>
+      <li><strong>Google Firebase</strong> supplies the resource library and stores the anonymous usage counts, on servers in Johannesburg, South Africa.</li>
       <li><strong>WhatsApp</strong> (Meta) handles any chat you start with us. Its own privacy policy applies to messages sent through it.</li>
     </ul>
 

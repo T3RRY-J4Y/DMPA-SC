@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin · DMPA self-inject</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#9300FF">
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="css/styles.css?v=20261023a">
+  <link rel="stylesheet" href="css/admin.css?v=20261023a">
+  <script src="js/config.js?v=20261023a" defer></script>
+  <script src="js/admin/app.js?v=20261023a" type="module"></script>
+</head>
+<body class="admin">
+
+<header class="admin-bar">
+  <a class="admin-bar__logo" href="index.html" aria-label="Back to the DMPA self-inject site"><img src="assets/images/logo-purple.png" alt="DMPA self-inject" width="110" height="44"></a>
+  <span class="admin-bar__badge">Admin</span>
+  <nav class="admin-nav" aria-label="Admin" hidden>
+    <a href="#analytics" data-tab="analytics">Analytics</a>
+    <a href="#resources" data-tab="resources">Resources</a>
+  </nav>
+  <span class="admin-bar__spacer"></span>
+  <div class="admin-bar__user" data-user hidden>
+    <span data-user-email></span>
+    <button class="btn btn--sm btn--outline" type="button" data-sign-out>Sign out</button>
+  </div>
+</header>
+
+<p class="dev-note admin-emulator" data-emulator-note hidden>Using local emulators · nothing here touches the live site</p>
+
+<main class="admin-main" id="main">
+
+  <!-- Loading, before the auth state is known -->
+  <div class="admin-loading" aria-live="polite"><span class="admin-spinner" aria-hidden="true"></span> Loading…</div>
+
+  <!-- Signed out -->
+  <section class="admin-gate" data-view="signin" hidden>
+    <div class="card admin-gate__card">
+      <h1>Sign in to the admin panel</h1>
+      <p>Manage the resource library and see how the site is used. Use the Google account you were given admin access with.</p>
+      <button class="btn btn--lg btn--primary btn--block" type="button" data-sign-in>Sign in with Google</button>
+      <p class="admin-gate__small"><a href="index.html">Back to the site</a></p>
+    </div>
+  </section>
+
+  <!-- Signed in, but not an admin -->
+  <section class="admin-gate" data-view="denied" hidden>
+    <div class="card admin-gate__card">
+      <h1>You don’t have access yet</h1>
+      <p>You’re signed in as <strong data-denied-email></strong>, but this account isn’t an admin. Ask the site developer to run:</p>
+      <pre class="admin-code"><code data-denied-command></code></pre>
+      <p>Then come back and check again.</p>
+      <div class="admin-gate__actions">
+        <button class="btn btn--primary" type="button" data-check-again>Check again</button>
+        <button class="btn btn--outline" type="button" data-sign-out>Use another account</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Analytics -->
+  <section class="admin-view" data-view="analytics" hidden aria-labelledby="analytics-h">
+    <div class="admin-head">
+      <div>
+        <h1 id="analytics-h">Analytics</h1>
+        <p class="admin-head__sub">Anonymous counts from the public site. No cookies, no personal details and no quiz answers are collected.</p>
+      </div>
+      <div class="admin-head__actions">
+        <button class="btn btn--sm btn--outline" type="button" data-refresh>Refresh</button>
+        <button class="btn btn--sm btn--outline" type="button" data-export>Download CSV</button>
+      </div>
+    </div>
+
+    <div class="admin-filters">
+      <div class="chip-group" data-range role="group" aria-label="Period">
+        <button class="chip" type="button" data-days="7" aria-pressed="false">7 days</button>
+        <button class="chip" type="button" data-days="30" aria-pressed="true">30 days</button>
+        <button class="chip" type="button" data-days="90" aria-pressed="false">90 days</button>
+      </div>
+      <label class="admin-check"><input type="checkbox" data-opt-out> Don’t count my visits on this browser</label>
+      <span class="admin-status" data-status aria-live="polite"></span>
+    </div>
+
+    <div data-analytics-body aria-busy="true">
+      <p class="admin-notice" data-empty hidden>No visits recorded in this period yet. Counts appear here as soon as people use the site.</p>
+
+      <div class="stats" data-tiles></div>
+
+      <article class="panel panel--wide">
+        <div class="panel__head">
+          <h2 class="panel__title" data-chart-title>Visits per day</h2>
+          <div class="chip-group chip-group--sm" data-metric role="group" aria-label="Figure to chart">
+            <button class="chip" type="button" data-key="visits">Visits</button>
+            <button class="chip" type="button" data-key="views">Page views</button>
+            <button class="chip" type="button" data-key="downloads">Downloads</button>
+            <button class="chip" type="button" data-key="quiz">Quiz</button>
+            <button class="chip" type="button" data-key="whatsapp">WhatsApp</button>
+            <button class="chip" type="button" data-key="reminders">Reminders</button>
+          </div>
+        </div>
+        <div class="chart" data-chart></div>
+        <details class="panel__table"><summary>Show as a table</summary><div data-chart-table></div></details>
+      </article>
+
+      <div class="panels">
+        <article class="panel panel--wide">
+          <h2 class="panel__title">Resources</h2>
+          <p class="panel__note">“Seen” counts cards that were on screen. “Rate” is downloads as a share of times seen.</p>
+          <div data-panel="resources"></div>
+        </article>
+        <article class="panel">
+          <h2 class="panel__title">Method quiz</h2>
+          <div data-panel="quiz"></div>
+        </article>
+        <article class="panel">
+          <h2 class="panel__title">Most-opened questions</h2>
+          <div data-panel="faqs"></div>
+        </article>
+        <article class="panel">
+          <h2 class="panel__title">Pages viewed</h2>
+          <div data-panel="pages"></div>
+        </article>
+        <article class="panel">
+          <h2 class="panel__title">Where visits come from</h2>
+          <p class="panel__note">The referring site, or the <code>utm_source</code> tag on a shared link.</p>
+          <div data-panel="sources"></div>
+        </article>
+        <article class="panel">
+          <h2 class="panel__title">WhatsApp taps by location</h2>
+          <div data-panel="whatsapp"></div>
+        </article>
+        <article class="panel">
+          <h2 class="panel__title">Devices</h2>
+          <div data-panel="devices"></div>
+          <h3 class="panel__sub">Reminders saved to</h3>
+          <div data-panel="reminders"></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources -->
+  <section class="admin-view" data-view="resources" hidden aria-labelledby="resources-h">
+    <div class="admin-head">
+      <div>
+        <h1 id="resources-h">Resources</h1>
+        <p class="admin-head__sub" data-library-count>Loading…</p>
+      </div>
+      <div class="admin-head__actions">
+        <a class="btn btn--sm btn--outline" href="resources.html" target="_blank" rel="noopener">View on site</a>
+        <button class="btn btn--sm btn--primary" type="button" data-add>Add resource</button>
+      </div>
+    </div>
+    <ol class="lib" data-library aria-busy="true"></ol>
+  </section>
+</main>
+
+<dialog class="editor" id="resource-editor" aria-labelledby="editor-h">
+  <form class="editor__form" novalidate>
+    <header class="editor__head">
+      <h2 id="editor-h" data-editor-title>Add a resource</h2>
+      <button class="icon-btn" type="button" data-cancel aria-label="Close">✕</button>
+    </header>
+
+    <div class="editor__body">
+      <label class="field">Title
+        <input class="input" name="title" required maxlength="120" autocomplete="off">
+      </label>
+      <label class="field">Description <span class="field__hint">One or two sentences shown on the card</span>
+        <textarea class="input" name="description" rows="3" maxlength="400"></textarea>
+      </label>
+
+      <div class="editor__row">
+        <label class="field">Type <span class="field__hint">Sets the card colour</span>
+          <input class="input" name="type" list="types" autocomplete="off">
+        </label>
+        <label class="field">Audience <span class="field__hint">Drives the filter buttons</span>
+          <input class="input" name="audience" list="audiences" autocomplete="off">
+        </label>
+      </div>
+      <div class="editor__row">
+        <label class="field">Format
+          <input class="input" name="format" placeholder="PDF" autocomplete="off">
+        </label>
+        <label class="field">Details
+          <input class="input" name="details" placeholder="16 pages" autocomplete="off">
+        </label>
+      </div>
+
+      <fieldset class="field editor__set">
+        <legend>File</legend>
+        <div class="drop" data-drop="file">
+          <div class="drop__current" data-current></div>
+          <label class="drop__pick">
+            <input type="file" class="visually-hidden">
+            <span><b>Choose a file</b> or drop it here</span>
+            <small>PDF, image or video, up to 50 MB</small>
+          </label>
+        </div>
+        <label class="field field--inline">Or link to a file
+          <input class="input" name="fileUrl" placeholder="https://… or assets/downloads/guide.pdf" autocomplete="off">
+        </label>
+      </fieldset>
+
+      <fieldset class="field editor__set">
+        <legend>Cover image <span class="field__hint">Optional, 4:3. Without one a branded cover is drawn.</span></legend>
+        <div class="drop" data-drop="thumb">
+          <div class="drop__current" data-current></div>
+          <label class="drop__pick">
+            <input type="file" accept="image/*" class="visually-hidden">
+            <span><b>Choose an image</b> or drop it here</span>
+            <small>JPG, PNG or WebP, up to 5 MB</small>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="editor__row editor__row--end">
+        <label class="field editor__order">Order <span class="field__hint">Lowest first</span>
+          <input class="input" name="order" type="number" min="0" step="1">
+        </label>
+        <label class="switch switch--lg"><input type="checkbox" name="published"><span class="switch__track" aria-hidden="true"></span><span class="switch__label">Published on the site</span></label>
+      </div>
+    </div>
+
+    <footer class="editor__foot">
+      <div class="editor__progress" data-progress hidden><progress max="1" value="0"></progress><span data-progress-label></span></div>
+      <button class="btn btn--outline" type="button" data-cancel>Cancel</button>
+      <button class="btn btn--primary" type="submit">Save</button>
+    </footer>
+  </form>
+</dialog>
+
+<datalist id="types"><option value="Guide"><option value="Card"><option value="Poster"><option value="Video"><option value="Brand"></datalist>
+<datalist id="audiences"><option value="For women"><option value="For partners"><option value="For health workers"></datalist>
+
+</body>
+</html>

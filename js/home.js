@@ -190,7 +190,8 @@
   input.value = iso(new Date());
   input.max = iso(new Date());
   input.addEventListener('input', renderCalc);
-  out.ics.addEventListener('click', downloadIcs);
+  out.ics.addEventListener('click', () => { downloadIcs(); DMPA.analytics?.track('reminder_save', 'other calendar'); });
+  out.google.addEventListener('click', () => { if (schedule()) DMPA.analytics?.track('reminder_save', 'google calendar'); });
   renderCalc();
 
   /* ---- Method filter --------------------------------------------------- */
@@ -212,7 +213,7 @@
     const action = DMPA.resources.hasFile(r)
       ? `<a class="btn btn--outline self-start" href="${esc(r.fileUrl)}" target="_blank" rel="noopener" download>Download ${esc(r.format || '')}</a>`
       : '<span class="btn btn--placeholder self-start" aria-disabled="true">Coming soon</span>';
-    return `<article class="resource resource--plain ${DMPA.resources.toneFor(r)}">${cover}
+    return `<article class="resource resource--plain ${DMPA.resources.toneFor(r)}" data-resource="${esc(r.id)}">${cover}
       <div class="resource__body"><span class="eyebrow" style="color:var(--tone-ink)">${esc(kicker)}</span>
       <h3 class="resource__title">${esc(r.title)}</h3><p class="resource__desc">${esc(r.description)}</p></div>${action}</article>`;
   };
@@ -220,7 +221,7 @@
   list.innerHTML = DMPA.util.skeleton(3);
   DMPA.resources.load()
     .finally(() => list.setAttribute('aria-busy', 'false'))
-    .then(({ items }) => { list.innerHTML = items.filter(r => r.audience === 'For women').slice(0, 3).map(card).join(''); })
+    .then(({ items }) => { list.innerHTML = items.filter(r => r.audience === 'For women').slice(0, 3).map(card).join(''); DMPA.analytics?.watchResources(list); })
     .catch(err => {
       console.error('Downloads failed to load', err);
       list.innerHTML = '<p class="text-muted">Downloads are unavailable right now. <a href="resources.html">Try the resources page</a>.</p>';

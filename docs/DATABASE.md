@@ -1,6 +1,6 @@
 # Connecting the database (Firebase)
 
-The Resources page and the home-page downloads read from **Cloud Firestore**. Files and thumbnails are stored in **Firebase Storage**. Until a config is supplied, the site shows `js/data/sample-resources.js` and marks it with a “sample data” label.
+The Resources page and the home-page downloads read from **Cloud Firestore**, which also stores anonymous usage events for the admin dashboard. Files and thumbnails are stored in **Firebase Storage**. Until a config is supplied, the site shows `js/data/sample-resources.js` and marks it with a “sample data” label.
 
 The connection code is already written (`js/services/resources-service.js`). The security rules, Firebase CLI config and a seed script are in the repo too. Going live only needs a project and configuration.
 
@@ -15,10 +15,11 @@ npx firebase login          # opens a browser to sign in with your Google accoun
 
 | Command | What it does |
 | --- | --- |
-| `npm run emulators` | Runs Firestore and Storage locally (needs Java), with a UI at http://localhost:4000 |
+| `npm run emulators` | Runs Firestore, Storage and Auth locally (needs Java), with a UI at http://localhost:4000. Open `admin.html?emulator` to use the admin panel against them. |
 | `npm run seed:emulator` | Seeds the local emulator with the sample resources |
 | `npm run seed` | Seeds the live project (needs a service account key, see step 4) |
-| `npm run deploy:rules` | Publishes `firestore.rules`, `storage.rules` and `firestore.indexes.json` |
+| `npm run deploy:rules` | Publishes `firestore.rules`, `storage.rules` and `firestore.indexes.json` (which includes the events TTL policy) |
+| `npm run admin -- add <email>` | Gives someone access to the admin panel (also `remove <email>` and `list`). Needs the service account key. |
 
 ## 1. Create the project
 
@@ -78,20 +79,73 @@ Re-running overwrites documents with the same ID and leaves others alone. Add `-
 
 ## 5. Security rules
 
-The public can read published resources only. All writes go through the console or the Admin SDK (the seed script), which bypass the rules. The rules live in `firestore.rules` and `storage.rules`. Publish them with:
+The rules live in `firestore.rules` and `storage.rules`:
+
+- **The public** can read published resources and the files in `resources/` and `thumbs/`, and can add usage events in one exact shape (see below). Nothing else.
+- **Admins** are signed-in users with the `admin` custom claim. They can read, add, edit and delete every resource, upload files (up to 50 MB) and covers (images up to 5 MB), and read events.
+- The Admin SDK (the seed and admin scripts) bypasses the rules.
+
+Publish them with:
 
 ```sh
 npm run deploy:rules
 ```
 
-They have been checked against the emulator: the published-only query succeeds, while unfiltered reads, reads of unpublished documents and any client writes are denied.
+They have been checked against the emulators. Events with an unknown type, extra fields, a browser-set time or an over-long value are rejected. Public and non-admin users can't read events, see hidden resources, write resources or upload files. Admins can do all of those.
 
-## 6. Check it works
+## 6. The admin panel
+
+`admin.html` is where resources are managed and usage is reviewed. It isn't linked from the site, and it is hidden from search engines.
+
+**One-time setup**
+
+1. In the Firebase console, go to **Authentication → Sign-in method**, and enable **Google**.
+2. Under **Authentication → Settings → Authorised domains**, add every address the panel will be opened from. `localhost` and `dmpa-selfinject.firebaseapp.com` are there by default. Add the live domain and any Codespaces preview address, e.g. `xyz-5500.app.github.dev`.
+3. Ask the new admin to open `admin.html` and sign in with Google. They'll see “You don’t have access yet”.
+4. Grant access, then they click **Check again**:
+
+   ```sh
+   GOOGLE_APPLICATION_CREDENTIALS=service-account.json npm run admin -- add their@email.com
+   ```
+
+**Resources tab:** add, edit, publish or hide, reorder and delete resources.
+- Files and covers can be chosen or dragged in. They upload to Storage when you press Save.
+- A replaced or deleted file is removed from Storage too.
+- The download is given the resource's title as its file name.
+
+**Analytics tab:** counts for the last 7, 30 or 90 days, each compared with the period before. It shows:
+- visits per day;
+- resources seen and downloaded;
+- quiz starts, finishes and top matches;
+- the FAQs opened most;
+- pages viewed, traffic sources and devices;
+- WhatsApp taps and reminders saved.
+
+**Download CSV** exports the raw events. Tick **Don’t count my visits on this browser** on the browsers you use to test the site.
+
+## 7. The `events` collection (analytics)
+
+`js/analytics.js` writes one small document per event over the Firestore REST API, so public pages don't load the Firebase SDK. Nothing identifying is sent: no cookies, IDs, IP-based data or quiz answers. Browsers that send Do Not Track or Global Privacy Control are not counted.
+
+| Field | Type | Notes |
+| --- | --- | --- |
+| `type` | string | `page_view`, `resource_view`, `resource_download`, `quiz_start`, `quiz_complete`, `faq_open`, `whatsapp_click` or `reminder_save` |
+| `page` | string | `home`, `faqs`, `resources`, `privacy` or `terms` |
+| `item` | string | Depends on `type`: the traffic source (page views), the resource ID, the FAQ question, the quiz's top-match method ID, where the WhatsApp button was, or which calendar |
+| `first` | boolean | `true` on the first page view of a browser session, which counts as a visit |
+| `device` | string | `mobile` or `desktop` |
+| `ts` | timestamp | Set by the server |
+| `expireAt` | timestamp | Two years on. A TTL policy deletes the document after this. |
+
+The dashboard loads the raw events for the chosen period and the one before it. That's one document read per event. At tens of thousands of events a month this is still cents. If traffic grows a lot, add a scheduled Cloud Function that rolls events up into daily totals.
+
+To tag a shared link, add `?utm_source=`, e.g. `index.html?utm_source=clinic-poster`. The tag then appears under “Where visits come from”.
+
+## 8. Check it works
 
 Open `resources.html`. The “sample data” label should disappear, and your published documents should load. If they don't, the browser console shows the Firebase error. The usual causes are a missing `published: true` field or rules that have not been published.
 
 ## Later
 
-- **Content editing:** to let non-developers manage resources, add Firebase Authentication and an admin page, and change the rules to `allow write: if request.auth.token.admin == true`.
 - **FAQs in the database:** `js/data/faq-data.js` could move to a `faqs` collection in the same way. Keep it static until the content changes often.
-- **Analytics:** Firebase Analytics or a privacy-friendly alternative can track downloads. Avoid collecting personal health data.
+- **Spam protection:** anyone can add events, so a determined person could inflate the counts. If that happens, turn on Firebase App Check for Firestore.

@@ -4,7 +4,8 @@ A resource hub for **DMPA-SC self-injectable contraception** (“Contraception M
 
 - **Home**: what DMPA-SC is, the MAPS self-injection method, what to expect afterwards, a next-injection date calculator with calendar export, a comparison of contraceptive methods, and downloads.
 - **FAQs**: 108 questions in 7 topics, with search, topic navigation and quick facts.
-- **Resources**: a downloadable library of guides, cards and brand files, filtered by audience. It runs on sample data until Firebase is connected.
+- **Resources**: a downloadable library of guides, cards and brand files, filtered by audience, served from Firebase.
+- **Admin** (`admin.html`, not linked from the site): upload and manage resources, and see anonymous usage analytics. Setup is in [`docs/DATABASE.md`](docs/DATABASE.md#6-the-admin-panel).
 
 It is a static site: plain HTML, one stylesheet and vanilla JavaScript, with no build step or framework.
 
@@ -28,13 +29,17 @@ The site can be hosted on any static host (GitHub Pages, Netlify, Firebase Hosti
 ├── resources.html           Resource library
 ├── privacy.html             Privacy policy (POPIA)
 ├── terms.html               Terms of use
+├── admin.html               Admin panel (Google sign-in, admins only)
 ├── 404.html                 Not-found page
 ├── robots.txt, sitemap.xml  Search engine files (domain placeholder, see below)
 ├── favicon.ico, site.webmanifest
 ├── css/
-│   └── styles.css           The site stylesheet: brand tokens, components, page sections
+│   ├── styles.css           The site stylesheet: brand tokens, components, page sections
+│   └── admin.css            Admin panel styles, built on the same tokens
 ├── js/
 │   ├── config.js            Site settings: WhatsApp number, Firebase config  ← edit to go live
+│   ├── analytics.js         Anonymous usage counts for the admin dashboard
+│   ├── admin/               Admin panel modules: sign-in, analytics dashboard, resource manager
 │   ├── site.js              Shared behaviour: mobile menu, back-to-top, helpers
 │   ├── home.js              MAPS tabs, date calculator, method filter, downloads
 │   ├── faqs.js              FAQ rendering, search, expand/collapse
@@ -52,7 +57,8 @@ The site can be hosted on any static host (GitHub Pages, Netlify, Firebase Hosti
 ├── firebase.json, .firebaserc       Firebase CLI config (project ID, rules, emulators)
 ├── firestore.rules, storage.rules   Security rules, deployed with `npm run deploy:rules`
 ├── scripts/
-│   └── seed-resources.mjs   Copies the sample resources into Firestore
+│   ├── seed-resources.mjs   Copies the sample resources into Firestore
+│   └── admin.mjs            Grants or removes admin access (npm run admin -- add <email>)
 ├── package.json             Firebase tooling only; the site itself has no build
 ├── design-source/           Brand and print source files (not served to users)
 │   ├── social/og-image.html Layout used to render assets/images/og-image.jpg (1200×630)

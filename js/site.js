@@ -131,6 +131,7 @@ DMPA.util = {
       others.forEach(o => anims.push(setAccOpen(o, false)));
     }
     anims.push(setAccOpen(d, opening));
+    if (opening) DMPA.analytics?.track('faq_open', summary.textContent);
     holdInPlace(summary, anims.filter(Boolean));
   });
 

@@ -135,7 +135,7 @@
         <button class="btn btn--primary btn--lg btn--block" type="button" data-quiz-start>Start the quiz</button>
         ${disclaimer}
       </div>`, 'purple', '[data-quiz-start]');
-    $('[data-quiz-start]', panel).addEventListener('click', () => { answers = []; at = 0; renderQuestion(); });
+    $('[data-quiz-start]', panel).addEventListener('click', () => { answers = []; at = 0; renderQuestion(); DMPA.analytics?.track('quiz_start'); });
   }
 
   function renderQuestion() {
@@ -199,6 +199,8 @@
 
   function renderResults() {
     const { ranked, flags, whys } = results();
+    // Only the top match is counted, never the answers that led to it.
+    DMPA.analytics?.track('quiz_complete', ranked[0] || 'none');
     const notes = [];
     if (flags.has('urgent')) notes.push(`<div class="quiz__note quiz__note--urgent">${icon('zap')}<p><b>Act soon.</b> The emergency pill works best the sooner you take it, within 5 days of unprotected sex. Get it free at your clinic. It isn’t for regular use, so also choose an ongoing method.</p></div>`);
     if (flags.has('sti')) notes.push(`<div class="quiz__note">${icon('shield')}<p>Condoms are the only method that also protects against HIV and STIs. ${ranked[0] === 'condom' ? 'You can use them on their own or together with another method.' : 'Use them together with your main method.'}</p></div>`);
