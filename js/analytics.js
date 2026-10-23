@@ -13,9 +13,10 @@ DMPA.analytics = (() => {
   const fb = cfg.firebase;
   const OPT_OUT_KEY = 'dmpa-notrack';
   const store = (kind, fn) => { try { return fn(window[kind]); } catch { return null; } };
-  const optedOut = navigator.globalPrivacyControl === true || navigator.doNotTrack === '1'
-    || store('localStorage', s => s.getItem(OPT_OUT_KEY)) === '1';
-  const enabled = !!fb && cfg.analytics !== false && !optedOut;
+  const browserSaysNo = navigator.globalPrivacyControl === true || navigator.doNotTrack === '1';
+  const optedOut = browserSaysNo || store('localStorage', s => s.getItem(OPT_OUT_KEY)) === '1';
+  const available = !!fb && cfg.analytics !== false && !browserSaysNo;
+  let enabled = available && !optedOut;
 
   const page = (location.pathname.split('/').pop() || 'index').replace(/\.html$/, '').replace(/^index$/, 'home');
   const device = matchMedia('(max-width: 760px), (pointer: coarse)').matches ? 'mobile' : 'desktop';
@@ -97,5 +98,18 @@ DMPA.analytics = (() => {
     }, { capture: true });
   }
 
-  return { track, watchResources, OPT_OUT_KEY };
+  /* The visitor's own choice, from the cookie notice or the privacy policy.
+     It applies from the next count onwards and is remembered on this browser. */
+  function setCounting(on) {
+    if (!available) return;
+    enabled = on;
+    store('localStorage', s => (on ? s.removeItem(OPT_OUT_KEY) : s.setItem(OPT_OUT_KEY, '1')));
+    if (!on && io) io.disconnect();
+  }
+
+  return {
+    track, watchResources, setCounting, OPT_OUT_KEY,
+    get counting() { return enabled; },
+    get available() { return available; },   // false when switched off or the browser sends Do Not Track / GPC
+  };
 })();

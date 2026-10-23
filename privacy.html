@@ -26,10 +26,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Satisfy&display=swap">
-  <link rel="stylesheet" href="css/styles.css?v=20261023e">
-  <script src="js/config.js?v=20261023e" defer></script>
-  <script src="js/analytics.js?v=20261023e" defer></script>
-  <script src="js/site.js?v=20261023e" defer></script>
+  <link rel="stylesheet" href="css/styles.css?v=20261023g">
+  <script src="js/config.js?v=20261023g" defer></script>
+  <script src="js/analytics.js?v=20261023g" defer></script>
+  <script src="js/site.js?v=20261023g" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -89,7 +89,7 @@
     <h2>Information we collect</h2>
     <p><strong>Information you choose to send us.</strong> If you contact us on WhatsApp, we see your phone number, WhatsApp profile name and the messages you send. We use these only to answer your question and support you.</p>
     <p><strong>Technical information.</strong> Like most websites, our hosting provider automatically records basic technical details when pages are requested, such as your IP address, browser type and the time of the visit. These logs are used to keep the site secure and working, and are deleted on the provider’s normal schedule.</p>
-    <p><strong>Usage counts.</strong> To learn which information helps people most, the site records simple, anonymous counts of how it is used. Each count notes what happened, the page it happened on, the date and time, and whether you are on a phone or a computer. What happened is one of these:</p>
+    <p id="usage-counts"><strong>Usage counts.</strong> To learn which information helps people most, the site records simple, anonymous counts of how it is used. Each count notes what happened, the page it happened on, the date and time, and whether you are on a phone or a computer. What happened is one of these:</p>
     <ul>
       <li>a page was opened, and the website or shared link that brought you here, if any</li>
       <li>a resource was shown on screen, opened, downloaded or shared</li>
@@ -98,8 +98,9 @@
       <li>a next-injection reminder was saved to a calendar. The dates are never sent.</li>
       <li>a WhatsApp button was tapped</li>
     </ul>
-    <p>These counts contain no name, phone number, email address, IP address, cookie or device ID, so we can’t tell who you are or link one visit to another. They are kept for up to two years and then deleted automatically. If your browser sends a “Do Not Track” or “Global Privacy Control” signal, nothing is counted.</p>
-    <p><strong>Information stored on your device.</strong> The site saves one setting in your browser’s local storage: that you have seen the cookie notice, so it isn’t shown on every visit. While a browser tab is open, it also notes in session storage that this visit has already been counted, so that the visit is counted only once. This note is deleted when you close the tab. Neither contains personal information. You can remove it at any time by clearing your browser’s site data.</p>
+    <p>These counts contain no name, phone number, email address, IP address, cookie or device ID, so we can’t tell who you are or link one visit to another. They are kept for up to two years and then deleted automatically. If your browser sends a “Do Not Track” or “Global Privacy Control” signal, nothing is counted. You can also switch counting off for your browser here.</p>
+    <div class="counting-toggle" data-counting-toggle hidden><p data-counting-status></p><button class="btn btn--sm btn--outline" type="button"></button></div>
+    <p><strong>Information stored on your device.</strong> The site saves a setting in your browser’s local storage: that you have seen the cookie notice, so it isn’t shown on every visit. If you switch counting off, that choice is saved there too. While a browser tab is open, the site also notes in session storage that this visit has already been counted, so that the visit is counted only once. This note is deleted when you close the tab. None of these contain personal information. You can remove them at any time by clearing your browser’s site data.</p>
 
     <h2>Services from other companies</h2>
     <p>Some parts of the site are delivered by other companies. When your browser loads them, they receive your IP address and browser details:</p>

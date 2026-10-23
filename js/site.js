@@ -135,23 +135,49 @@ DMPA.util = {
     holdInPlace(summary, anims.filter(Boolean));
   });
 
-  /* Cookie notice. The site sets no tracking cookies, so this informs rather
-     than asks; the only thing stored is that the notice was dismissed. */
+  /* Cookie and privacy notice. The site sets no cookies and the usage counts
+     are anonymous (js/analytics.js), so this informs rather than asks; the
+     privacy policy has the switch for turning counting off. The stored value is the notice version,
+     so changing what it says shows it once more to people who dismissed an
+     older one. */
   const NOTICE_KEY = 'dmpa-cookie-notice';
+  const NOTICE_VERSION = '2';
+  const analytics = DMPA.analytics;
   let seen = false;
-  try { seen = localStorage.getItem(NOTICE_KEY) === '1'; } catch { /* storage blocked: show the notice */ }
+  try { seen = localStorage.getItem(NOTICE_KEY) === NOTICE_VERSION; } catch { /* storage blocked: show the notice */ }
   if (!seen) {
+    const counting = analytics?.counting;
     const notice = document.createElement('section');
     notice.className = 'cookie-notice';
-    notice.setAttribute('aria-label', 'Cookie notice');
-    notice.innerHTML = '<p>We don’t use advertising or tracking cookies. We only remember that you’ve seen this message. ' +
-      '<a href="privacy.html">Privacy policy</a></p><button class="btn btn--sm btn--primary" type="button">Got it</button>';
+    notice.setAttribute('aria-label', 'Cookies and privacy');
+    notice.innerHTML = `<p>${counting
+        ? 'No cookies, no ads. We count visits anonymously, with nothing that identifies you, to learn which information helps most.'
+        : 'No cookies, no ads. We don’t count your visits, because your browser asked us not to.'} ` +
+      `<a href="privacy.html#usage-counts">Privacy policy</a></p>
+      <button class="btn btn--sm btn--primary" type="button" data-notice-ok>Got it</button>`;
     document.body.appendChild(notice);
     document.body.classList.add('has-cookie-notice');
-    $('button', notice).addEventListener('click', () => {
-      try { localStorage.setItem(NOTICE_KEY, '1'); } catch { /* not remembered; fine */ }
+    const close = () => {
+      try { localStorage.setItem(NOTICE_KEY, NOTICE_VERSION); } catch { /* not remembered; fine */ }
       notice.remove();
       document.body.classList.remove('has-cookie-notice');
-    });
+    };
+    $('[data-notice-ok]', notice).addEventListener('click', close);
   }
+
+  /* The on/off switch for usage counts on the privacy policy */
+  $$('[data-counting-toggle]').forEach(box => {
+    const btn = $('button', box), status = $('[data-counting-status]', box);
+    const show = () => {
+      const on = !!analytics?.counting;
+      status.textContent = !analytics?.available
+        ? 'Your visits aren’t counted on this browser, because it sends a Do Not Track or Global Privacy Control signal.'
+        : on ? 'Your visits are being counted anonymously on this browser.' : 'Your visits aren’t counted on this browser.';
+      btn.hidden = !analytics?.available;
+      btn.textContent = on ? 'Stop counting my visits' : 'Count my visits again';
+    };
+    btn.addEventListener('click', () => { analytics.setCounting(!analytics.counting); show(); });
+    box.hidden = false;
+    show();
+  });
 })();
