@@ -11,10 +11,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="css/styles.css?v=20261023a">
-  <link rel="stylesheet" href="css/admin.css?v=20261023a">
-  <script src="js/config.js?v=20261023a" defer></script>
-  <script src="js/admin/app.js?v=20261023a" type="module"></script>
+  <link rel="stylesheet" href="css/styles.css?v=20261023b">
+  <link rel="stylesheet" href="css/admin.css?v=20261023b">
+  <script src="js/config.js?v=20261023b" defer></script>
+  <script src="js/admin/app.js?v=20261023b" type="module"></script>
 </head>
 <body class="admin">
 
@@ -155,6 +155,19 @@
         <a class="btn btn--sm btn--outline" href="resources.html" target="_blank" rel="noopener">View on site</a>
         <button class="btn btn--sm btn--primary" type="button" data-add>Add resource</button>
       </div>
+    </div>
+    <div class="admin-filters">
+      <label class="sort-field">Sort by
+        <select class="input input--pill" data-sort>
+          <option value="order">Display order</option>
+          <option value="title">Title (A to Z)</option>
+          <option value="newest">Newest added</option>
+          <option value="updated">Recently edited</option>
+          <option value="type">Type</option>
+          <option value="status">Hidden first</option>
+        </select>
+      </label>
+      <span class="admin-status" data-sort-hint hidden>Switch to “Display order” to move resources up or down.</span>
     </div>
     <ol class="lib" data-library aria-busy="true"></ol>
   </section>

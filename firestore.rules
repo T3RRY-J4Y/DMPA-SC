@@ -31,8 +31,9 @@ service cloud.firestore {
     function validEvent(e) {
       return e.keys().hasAll(['type', 'page', 'device', 'ts', 'expireAt'])
         && e.keys().hasOnly(['type', 'page', 'item', 'device', 'first', 'ts', 'expireAt'])
-        && e.type in ['page_view', 'resource_view', 'resource_download', 'quiz_start',
-                      'quiz_complete', 'whatsapp_click', 'reminder_save', 'faq_open']
+        && e.type in ['page_view', 'resource_view', 'resource_preview', 'resource_download',
+                      'resource_share', 'quiz_start', 'quiz_complete', 'whatsapp_click',
+                      'reminder_save', 'faq_open']
         && e.page is string && e.page.size() <= 40
         && e.device in ['mobile', 'desktop']
         && (!('item' in e) || (e.item is string && e.item.size() <= 120))

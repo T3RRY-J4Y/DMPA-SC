@@ -15,6 +15,19 @@ let items = [];      // [{ id, ...data, thumbSrc, fileSrc }]
 let editing = null;  // the item being edited, or null for a new one
 let pending = {};    // { file, thumb }: File to upload, or null to remove
 let wired = false, loaded = false;
+let sortBy = 'order';   // the site's own order; the arrows only work in this view
+
+const time = v => (v?.toMillis ? v.toMillis() : 0);
+const text = (a, b) => String(a || '').localeCompare(String(b || ''), 'en-ZA', { sensitivity: 'base' });
+const byOrder = (a, b) => (a.order ?? 999) - (b.order ?? 999);
+const SORTS = {
+  order: byOrder,
+  title: (a, b) => text(a.title, b.title),
+  newest: (a, b) => time(b.createdAt) - time(a.createdAt) || byOrder(a, b),
+  updated: (a, b) => time(b.updatedAt || b.createdAt) - time(a.updatedAt || a.createdAt) || byOrder(a, b),
+  type: (a, b) => text(a.type, b.type) || byOrder(a, b),
+  status: (a, b) => Number(a.published) - Number(b.published) || byOrder(a, b),
+};
 
 export function open() {
   if (!wired) wire();
@@ -34,7 +47,7 @@ async function load() {
       [r.thumbSrc, r.fileSrc] = await Promise.all([r.thumbUrl || url(r.thumbPath), r.fileUrl || url(r.filePath)]);
       return r;
     }));
-    items.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+    items.sort(byOrder);
     loaded = true;
     render();
   } catch (err) {
@@ -51,7 +64,9 @@ function render() {
     list.innerHTML = '<div class="empty-state"><strong>No resources yet</strong><p>Add your first guide, card or poster.</p></div>';
     return;
   }
-  list.innerHTML = items.map((r, i) => {
+  const manual = sortBy === 'order';
+  $('[data-sort-hint]', view).hidden = manual;
+  list.innerHTML = items.slice().sort(SORTS[sortBy]).map((r, i) => {
     const cover = r.thumbSrc
       ? `<img src="${esc(r.thumbSrc)}" alt="" loading="lazy">`
       : `<span class="lib-item__cover-type">${esc(r.type || 'File')}</span>`;
@@ -60,8 +75,8 @@ function render() {
       : '<span class="lib-item__missing">No file yet: shows “Coming soon”</span>';
     return `<li class="lib-item ${TONES[r.type] || 'tone-indigo'}" data-id="${esc(r.id)}">
       <div class="lib-item__order">
-        <button class="icon-btn" type="button" data-move="-1" aria-label="Move ${esc(r.title)} up" ${i === 0 ? 'disabled' : ''}>↑</button>
-        <button class="icon-btn" type="button" data-move="1" aria-label="Move ${esc(r.title)} down" ${i === items.length - 1 ? 'disabled' : ''}>↓</button>
+        <button class="icon-btn" type="button" data-move="-1" aria-label="Move ${esc(r.title)} up" ${!manual || i === 0 ? 'disabled' : ''}>↑</button>
+        <button class="icon-btn" type="button" data-move="1" aria-label="Move ${esc(r.title)} down" ${!manual || i === items.length - 1 ? 'disabled' : ''}>↓</button>
       </div>
       <div class="lib-item__cover">${cover}</div>
       <div class="lib-item__body">
@@ -81,6 +96,7 @@ function render() {
 function wire() {
   wired = true;
   $('[data-add]', view).addEventListener('click', () => edit(null));
+  $('[data-sort]', view).addEventListener('change', e => { sortBy = e.target.value; render(); });
 
   list.addEventListener('click', e => {
     const row = e.target.closest('[data-id]');
@@ -269,6 +285,7 @@ async function save(e) {
 
 /* ---- Reorder and delete ---------------------------------------------------- */
 async function move(item, by) {
+  if (sortBy !== 'order') return;
   const from = items.indexOf(item), to = from + by;
   if (to < 0 || to >= items.length) return;
   const next = items.slice();

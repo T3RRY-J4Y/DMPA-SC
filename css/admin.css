@@ -47,6 +47,7 @@
 .admin-check { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; color: var(--ink-2); cursor: pointer; }
 .admin-check input { width: 18px; height: 18px; accent-color: var(--purple); }
 .admin-status { font-size: 14px; color: var(--subtle); margin-left: auto; }
+.admin .sort-field .input { min-height: 40px; background-color: #fff; }
 .chip-group--sm .chip { min-height: 36px; padding: 6px 14px; font-size: 14px; }
 .admin-notice { margin: 0 0 20px; padding: 14px 18px; background: #FFF7D6; border-radius: var(--r-sm); color: #5C4500; }
 [aria-busy="true"] { opacity: .55; transition: opacity var(--ease); }

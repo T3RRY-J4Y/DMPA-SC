@@ -79,12 +79,15 @@ DMPA.analytics = (() => {
     const first = store('sessionStorage', s => { const f = !s.getItem('dmpa-visit'); s.setItem('dmpa-visit', '1'); return f; });
     track('page_view', source(), { first: first !== false });
 
+    // Download and share links name their resource: data-download="<id>",
+    // data-share="<id>". A WhatsApp share isn't a chat with us, so it isn't
+    // counted as a WhatsApp tap.
     document.addEventListener('click', e => {
       const a = e.target.closest('a[href]');
       if (!a) return;
-      if (/wa\.me|whatsapp\.com/.test(a.href)) track('whatsapp_click', placeOf(a));
-      const card = a.closest('[data-resource]');
-      if (card) track('resource_download', card.dataset.resource);
+      if (a.dataset.download) track('resource_download', a.dataset.download);
+      else if (a.dataset.share) track('resource_share', a.dataset.share);
+      else if (/wa\.me|whatsapp\.com/.test(a.href)) track('whatsapp_click', placeOf(a));
     }, { capture: true });
   }
 

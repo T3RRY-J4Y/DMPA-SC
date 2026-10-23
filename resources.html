@@ -26,13 +26,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Satisfy&display=swap">
-  <link rel="stylesheet" href="css/styles.css?v=20261023a">
-  <script src="js/config.js?v=20261023a" defer></script>
-  <script src="js/analytics.js?v=20261023a" defer></script>
-  <script src="js/data/sample-resources.js?v=20261023a" defer></script>
-  <script src="js/services/resources-service.js?v=20261023a" defer></script>
-  <script src="js/site.js?v=20261023a" defer></script>
-  <script src="js/resources.js?v=20261023a" defer></script>
+  <link rel="stylesheet" href="css/styles.css?v=20261023b">
+  <script src="js/config.js?v=20261023b" defer></script>
+  <script src="js/analytics.js?v=20261023b" defer></script>
+  <script src="js/data/sample-resources.js?v=20261023b" defer></script>
+  <script src="js/services/resources-service.js?v=20261023b" defer></script>
+  <script src="js/site.js?v=20261023b" defer></script>
+  <script src="js/resources.js?v=20261023b" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -83,9 +83,14 @@
     <div class="chip-group" role="group" aria-label="Filter by audience" id="audience-filters"></div>
     <input class="input input--pill input--search" type="search" id="resource-search" placeholder="Search resources" aria-label="Search resources" autocomplete="off">
   </div>
-  <div class="row">
-    <span class="text-muted" style="font-size:15px" id="resource-count" aria-live="polite">Loading resources…</span>
-    <span class="dev-note" id="sample-note" hidden>sample data · connect Firebase in js/config.js</span>
+  <div class="row row--between library-meta">
+    <div class="row">
+      <span class="text-muted" style="font-size:15px" id="resource-count" aria-live="polite">Loading resources…</span>
+      <span class="dev-note" id="sample-note" hidden>sample data · connect Firebase in js/config.js</span>
+    </div>
+    <label class="sort-field">Sort by
+      <select class="input input--pill" id="resource-sort"></select>
+    </label>
   </div>
 
   <div class="alert" role="alert" id="resource-error" hidden>

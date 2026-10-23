@@ -752,6 +752,10 @@ ul[class], ol[class] { list-style: none; margin: 0; padding: 0; }
 .library-toolbar { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
 .library-toolbar .input { flex: 0 1 340px; min-width: 220px; font-size: 16px; min-height: 48px; }
 .library-grid { --grid-gap: 24px; --grid-min: 260px; }
+.library-meta { align-items: center; }
+.sort-field { display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; color: var(--muted); }
+.sort-field .input { width: auto; min-height: 44px; padding: 8px 40px 8px 18px; font-size: 15px; font-weight: 600; border-width: 2px; appearance: none; cursor: pointer;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%231A1238' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m1 1.5 5 5 5-5'/%3E%3C/svg%3E") no-repeat right 16px center; }
 
 /* FAQ page */
 .quick-fact { background: var(--tone-light); border-radius: var(--r-md); padding: 20px; display: flex; flex-direction: column; gap: 8px; }

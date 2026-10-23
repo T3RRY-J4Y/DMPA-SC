@@ -4,8 +4,14 @@
   const els = {
     filters: $('#audience-filters'), search: $('#resource-search'), list: $('#resource-list'),
     count: $('#resource-count'), note: $('#sample-note'), error: $('#resource-error'), empty: $('#resource-empty'),
+    sort: $('#resource-sort'),
   };
-  const state = { all: null, filter: 'All', query: '' };
+  // ?sort= in the URL picks the order, so a sorted list can be shared
+  const { SORTS } = DMPA.resources;
+  const fromUrl = new URLSearchParams(location.search).get('sort');
+  const state = { all: null, filter: 'All', query: '', sort: fromUrl in SORTS ? fromUrl : 'featured' };
+  els.sort.innerHTML = Object.entries(SORTS).map(([k, s]) => `<option value="${esc(k)}">${esc(s.label)}</option>`).join('');
+  els.sort.value = state.sort;
 
 
   const card = r => {
@@ -30,7 +36,7 @@
     els.filters.innerHTML = audiences.map(a => `<button class="chip" type="button" data-audience="${esc(a)}" aria-pressed="${a === state.filter}">${esc(a)}</button>`).join('');
 
     const q = state.query.trim().toLowerCase();
-    const items = all.filter(r => (state.filter === 'All' || r.audience === state.filter)
+    const items = DMPA.resources.sort(all, state.sort).filter(r => (state.filter === 'All' || r.audience === state.filter)
       && (!q || [r.title, r.description, r.type, r.audience].join(' ').toLowerCase().includes(q)));
     els.list.innerHTML = items.map(card).join('');
     DMPA.analytics?.watchResources(els.list);
@@ -62,6 +68,13 @@
     if (chip) { state.filter = chip.dataset.audience; render(); }
   });
   els.search.addEventListener('input', () => { state.query = els.search.value; render(); });
+  els.sort.addEventListener('change', () => {
+    state.sort = els.sort.value;
+    const url = new URL(location.href);
+    if (state.sort === 'featured') url.searchParams.delete('sort'); else url.searchParams.set('sort', state.sort);
+    history.replaceState(null, '', url);
+    render();
+  });
   $('#resource-reset').addEventListener('click', () => { state.filter = 'All'; state.query = els.search.value = ''; render(); });
   $('#resource-retry').addEventListener('click', load);
 

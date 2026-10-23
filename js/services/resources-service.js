@@ -42,5 +42,18 @@ DMPA.resources = (() => {
   const hasFile = r => !!r.fileUrl && r.fileUrl !== '#';
   const toneFor = r => TONES[r.type] || 'tone-indigo';
 
-  return { load, hasFile, toneFor };
+  /* Sort orders offered on the Resources page. Ties fall back to the
+     admin-set order. createdAt is a Firestore Timestamp, or absent on
+     sample data and seeded documents (sorted as oldest). */
+  const time = v => (v?.toMillis ? v.toMillis() : Date.parse(v) || 0);
+  const text = (a, b) => String(a || '').localeCompare(String(b || ''), 'en-ZA', { sensitivity: 'base' });
+  const SORTS = {
+    featured: { label: 'Recommended', compare: byOrder },
+    newest: { label: 'Newest first', compare: (a, b) => time(b.createdAt) - time(a.createdAt) || byOrder(a, b) },
+    title: { label: 'Title (A to Z)', compare: (a, b) => text(a.title, b.title) },
+    type: { label: 'Type', compare: (a, b) => text(a.type, b.type) || byOrder(a, b) },
+  };
+  const sort = (items, key) => items.slice().sort((SORTS[key] || SORTS.featured).compare);
+
+  return { load, hasFile, toneFor, SORTS, sort };
 })();
