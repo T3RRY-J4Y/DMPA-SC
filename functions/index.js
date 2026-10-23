@@ -11,7 +11,7 @@ import { setGlobalOptions } from 'firebase-functions/v2';
 import { handleAdmin } from './admin.js';
 
 initializeApp();
-setGlobalOptions({ region: 'africa-south1', maxInstances: 5 });
+setGlobalOptions({ region: 'europe-west1', maxInstances: 5 });
 
 const SITE = 'DMPA self-inject';
 const FALLBACK_IMAGE = { path: '/assets/images/og-image.jpg', width: 1200, height: 630, alt: 'DMPA self-inject: Contraception that fits your life.' };
