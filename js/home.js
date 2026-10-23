@@ -210,8 +210,9 @@
     const cover = r.thumbUrl
       ? `<img class="resource__thumb" src="${esc(r.thumbUrl)}" alt="Cover of ${esc(r.title)}" loading="lazy">`
       : `<div class="resource__cover"><span class="resource__cover-type">${esc(r.type)}</span><span class="resource__cover-title">${esc(r.title)}</span></div>`;
+    // Opens the resource's preview page, where it can be downloaded or shared
     const action = DMPA.resources.hasFile(r)
-      ? `<a class="btn btn--outline self-start" href="${esc(r.fileUrl)}" target="_blank" rel="noopener" download>Download ${esc(r.format || '')}</a>`
+      ? `<a class="btn btn--outline self-start" href="resources.html?resource=${encodeURIComponent(r.id)}">View and download</a>`
       : '<span class="btn btn--placeholder self-start" aria-disabled="true">Coming soon</span>';
     return `<article class="resource resource--plain ${DMPA.resources.toneFor(r)}" data-resource="${esc(r.id)}">${cover}
       <div class="resource__body"><span class="eyebrow" style="color:var(--tone-ink)">${esc(kicker)}</span>

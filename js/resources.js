@@ -18,13 +18,14 @@
     const cover = r.thumbUrl
       ? `<img class="resource__thumb" src="${esc(r.thumbUrl)}" alt="Cover of ${esc(r.title)}" loading="lazy">`
       : `<div class="resource__cover"><span class="resource__cover-type">${esc(r.type)}</span><span class="resource__cover-title">${esc(r.title)}</span></div>`;
+    // The title link covers the whole card and opens the preview; the button is only a visual cue.
     const action = DMPA.resources.hasFile(r)
-      ? `<a class="btn btn--sm btn--dark" href="${esc(r.fileUrl)}" target="_blank" rel="noopener" download aria-label="Download ${esc(r.title)}">Download</a>`
-      : '<span class="btn btn--sm btn--placeholder" aria-disabled="true">Coming soon</span>';
+      ? '<span class="btn btn--sm btn--dark" aria-hidden="true">View</span>'
+      : '<span class="btn btn--sm btn--placeholder" aria-hidden="true">Coming soon</span>';
     return `<article class="resource ${DMPA.resources.toneFor(r)}" data-resource="${esc(r.id)}">${cover}
       <div class="resource__body">
         <div class="resource__tags"><span class="tag">${esc(r.type)}</span>${r.audience ? `<span class="tag tag--neutral">${esc(r.audience)}</span>` : ''}</div>
-        <h2 class="resource__title">${esc(r.title)}</h2>
+        <h2 class="resource__title"><a class="resource__link" href="${esc(DMPA.resourcePreview.href(r.id))}" data-preview="${esc(r.id)}">${esc(r.title)}</a></h2>
         <p class="resource__desc">${esc(r.description)}</p>
         <div class="resource__foot"><span class="resource__meta">${esc([r.format, r.details].filter(Boolean).join(' · '))}</span>${action}</div>
       </div></article>`;
@@ -55,6 +56,7 @@
       state.all = items;
       els.note.hidden = source !== 'sample';
       render();
+      DMPA.resourcePreview.init(items);
     } catch (err) {
       console.error('Resources failed to load', err);
       els.list.innerHTML = '';
@@ -66,6 +68,13 @@
   els.filters.addEventListener('click', e => {
     const chip = e.target.closest('[data-audience]');
     if (chip) { state.filter = chip.dataset.audience; render(); }
+  });
+  // Open the preview in place; a modified click still opens a new tab
+  els.list.addEventListener('click', e => {
+    const link = e.target.closest('[data-preview]');
+    if (!link || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    DMPA.resourcePreview.show(link.dataset.preview);
   });
   els.search.addEventListener('input', () => { state.query = els.search.value; render(); });
   els.sort.addEventListener('change', () => {

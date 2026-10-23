@@ -18,7 +18,7 @@ const METHODS = {
 const METRICS = {
   visits: { label: 'Visits', hint: 'First page of each browser session', test: e => e.type === 'page_view' && e.first },
   views: { label: 'Page views', test: e => e.type === 'page_view' },
-  downloads: { label: 'Downloads', hint: 'Taps on a resource’s download button', test: e => e.type === 'resource_download' },
+  downloads: { label: 'Downloads', hint: 'Taps on the download button in a resource’s preview', test: e => e.type === 'resource_download' },
   quiz: { label: 'Quiz completions', test: e => e.type === 'quiz_complete' },
   whatsapp: { label: 'WhatsApp taps', test: e => e.type === 'whatsapp_click' },
   reminders: { label: 'Reminders saved', hint: 'Next injection date added to a calendar', test: e => e.type === 'reminder_save' },
@@ -228,13 +228,14 @@ function renderPanels() {
   $('[data-panel="devices"]', view).innerHTML = barList(tally(visits, e => (e.device === 'mobile' ? 'Phone or tablet' : 'Computer')));
 
   // Every resource in the library is listed, so ones nobody opens stand out.
-  const views = new Map(tally(ev('resource_view'), e => e.item));
-  const dls = new Map(tally(ev('resource_download'), e => e.item));
-  const ids = [...new Set([...Object.keys(state.titles), ...views.keys(), ...dls.keys()])];
-  const rows = ids.map(id => ({ id, v: views.get(id) || 0, d: dls.get(id) || 0 })).sort((a, b) => b.d - a.d || b.v - a.v);
+  const per = type => new Map(tally(ev(type), e => e.item));
+  const seen = per('resource_view'), opened = per('resource_preview'), dls = per('resource_download'), shares = per('resource_share');
+  const ids = [...new Set([...Object.keys(state.titles), ...seen.keys(), ...opened.keys(), ...dls.keys()])];
+  const rows = ids.map(id => ({ id, v: seen.get(id) || 0, o: opened.get(id) || 0, d: dls.get(id) || 0, s: shares.get(id) || 0 }))
+    .sort((a, b) => b.d - a.d || b.o - a.o || b.v - a.v);
   $('[data-panel="resources"]', view).innerHTML = rows.length
-    ? `<table class="admin-table"><thead><tr><th scope="col">Resource</th><th scope="col" class="num">Seen</th><th scope="col" class="num">Downloads</th><th scope="col" class="num">Rate</th></tr></thead>
-      <tbody>${rows.map(r => `<tr><td>${esc(title(r.id))}</td><td class="num">${num(r.v)}</td><td class="num">${num(r.d)}</td><td class="num">${pct(r.d, r.v)}</td></tr>`).join('')}</tbody></table>`
+    ? `<table class="admin-table"><thead><tr><th scope="col">Resource</th><th scope="col" class="num">Seen</th><th scope="col" class="num">Opened</th><th scope="col" class="num">Downloads</th><th scope="col" class="num">Download rate</th><th scope="col" class="num">Shares</th></tr></thead>
+      <tbody>${rows.map(r => `<tr><td>${esc(title(r.id))}</td><td class="num">${num(r.v)}</td><td class="num">${num(r.o)}</td><td class="num">${num(r.d)}</td><td class="num">${pct(r.d, r.o)}</td><td class="num">${num(r.s)}</td></tr>`).join('')}</tbody></table>`
     : '<p class="panel__empty">No resources yet.</p>';
 
   const started = ev('quiz_start').length, done = ev('quiz_complete');

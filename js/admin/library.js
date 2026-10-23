@@ -82,7 +82,7 @@ function render() {
       <div class="lib-item__body">
         <h3 class="lib-item__title">${esc(r.title)}</h3>
         <div class="lib-item__tags"><span class="tag">${esc(r.type || 'No type')}</span>${r.audience ? `<span class="tag tag--neutral">${esc(r.audience)}</span>` : ''}${[r.format, r.details].filter(Boolean).length ? `<span class="lib-item__meta">${esc([r.format, r.details].filter(Boolean).join(' · '))}</span>` : ''}</div>
-        <p class="lib-item__file">${file}</p>
+        <p class="lib-item__file">${file} · <a href="resources.html?resource=${encodeURIComponent(r.id)}" target="_blank" rel="noopener">Page link</a></p>
       </div>
       <label class="switch"><input type="checkbox" data-publish ${r.published ? 'checked' : ''}><span class="switch__track" aria-hidden="true"></span><span class="switch__label">${r.published ? 'Published' : 'Hidden'}</span></label>
       <div class="lib-item__actions">

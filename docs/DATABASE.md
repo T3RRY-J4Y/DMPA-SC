@@ -129,7 +129,7 @@ They have been checked against the emulators. Events with an unknown type, extra
 
 | Field | Type | Notes |
 | --- | --- | --- |
-| `type` | string | `page_view`, `resource_view`, `resource_download`, `quiz_start`, `quiz_complete`, `faq_open`, `whatsapp_click` or `reminder_save` |
+| `type` | string | `page_view`, `resource_view` (card on screen), `resource_preview` (preview opened), `resource_download`, `resource_share`, `quiz_start`, `quiz_complete`, `faq_open`, `whatsapp_click` or `reminder_save` |
 | `page` | string | `home`, `faqs`, `resources`, `privacy` or `terms` |
 | `item` | string | Depends on `type`: the traffic source (page views), the resource ID, the FAQ question, the quiz's top-match method ID, where the WhatsApp button was, or which calendar |
 | `first` | boolean | `true` on the first page view of a browser session, which counts as a visit |
@@ -138,6 +138,8 @@ They have been checked against the emulators. Events with an unknown type, extra
 | `expireAt` | timestamp | Two years on. A TTL policy deletes the document after this. |
 
 The dashboard loads the raw events for the chosen period and the one before it. That's one document read per event. At tens of thousands of events a month this is still cents. If traffic grows a lot, add a scheduled Cloud Function that rolls events up into daily totals.
+
+Every resource has its own address, `resources.html?resource=<id>`, which opens its preview. The ID is the Firestore document ID, and each row in the admin panel has a **Page link** to it. Downloads are counted only from the preview's Download button. Shares are counted when someone copies the link, uses the share menu or taps WhatsApp in the preview. A shared link works, but chat apps show the Resources page's general title and image as the link preview, not the resource's own. Per-resource link previews would need server-rendered pages, e.g. a Firebase Hosting rewrite to a Cloud Function.
 
 To tag a shared link, add `?utm_source=`, e.g. `index.html?utm_source=clinic-poster`. The tag then appears under “Where visits come from”.
 
